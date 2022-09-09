@@ -1,0 +1,32 @@
+{
+  "name": "laboration-1",
+  "version": "1.0.0",
+  "description": "Laboration-1 which is part of the course 1dv610",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint ./ || exit 0",
+    "lint:fix": "npx eslint ./ --fix || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TessGrass/laboration-1.git"
+  },
+  "author": "Therese Grass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TessGrass/laboration-1/issues"
+  },
+  "homepage": "https://github.com/TessGrass/laboration-1#readme",
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.6",
+    "eslint": "^8.22.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.6",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
