@@ -2,13 +2,13 @@
   "name": "laboration-1",
   "version": "1.0.0",
   "description": "Laboration-1 which is part of the course 1dv610",
-  "main": "index.js",
+  "main": "testModule.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "node testModule.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint ./ || exit 0",
-    "lint:fix": "npx eslint ./ --fix || exit 0"
+    "lint": "npx eslint index.js || exit 0",
+    "lint:fix": "npx eslint index.js --fix || exit 0"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
     "eslint-plugin-jsdoc": "^39.3.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.2.10"
   }
 }
