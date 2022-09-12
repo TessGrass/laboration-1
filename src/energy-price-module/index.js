@@ -37,10 +37,10 @@ export class DayAheadElectricityPrices {
   }
 
   #getTomorrowsDate () {
-    const todaysDate = new Date()
-    const tomorrowsDate = new Date(todaysDate)
-    tomorrowsDate.setDate(todaysDate.getDate() + 1)
-    const correctDate = this.#convertToCorrectDateFormat(tomorrowsDate)
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    const correctDate = this.#convertToCorrectDateFormat(tomorrow)
     return correctDate
   }
 

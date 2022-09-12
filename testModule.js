@@ -4,7 +4,7 @@ class TestElectricityPricesModule {
   #dayAheadElectricityPrices
   constructor () {
     this.#dayAheadElectricityPrices = new DayAheadElectricityPrices()
-    this.getPricesForSpecificArea()
+    this.getPricesAllAreas()
   }
 
   async getPricesAllAreas () {
