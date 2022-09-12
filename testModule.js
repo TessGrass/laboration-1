@@ -16,6 +16,10 @@ class TestElectricityPricesModule {
     const pricesSpecificArea = await this.#dayAheadElectricityPrices.getPricesForSpecificArea(area)
     console.table(pricesSpecificArea)
   }
+
+  convertWattToKilowatt () {
+    const kiloWatt = this.#dayAheadElectricityPrices.convertWattToKilowatt(300)
+  }
 }
 
 new TestElectricityPricesModule()

@@ -21,12 +21,11 @@ export class DayAheadElectricityPrices {
       }
    })
    return biddingAreaWithPrices
-
-
   }
 
   convertWattToKilowatt (watt) {
-
+    const kiloWatt = (watt / 1000)
+    return kiloWatt
   }
 
   convertKilowattToMegawatt (kilowatt) {
