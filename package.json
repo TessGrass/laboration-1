@@ -5,7 +5,7 @@
   "main": "testModule.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "node testModule.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint src/energy-price-module/index.js || exit 0",
     "lint:fix": "npx eslint index.js --fix || exit 0"

@@ -3,18 +3,25 @@ import fetch from 'node-fetch'
 export class DayAheadElectricityPrices {
   constructor () {
     this.extractElectricityData = ''
-    this.getPricesAllAreas()
     this.tomorrowsDate = this.#getTomorrowsDate()
   }
 
   async getPricesAllAreas () {
     const dayAheadPrices = await this.#getDayAheadElectricityData()
     return dayAheadPrices
-
-
   }
 
-  getPricesForSpecificArea (area) {
+  async getPricesForSpecificArea (biddingArea) {
+    const biddingAreaWithPrices = []
+    const dayAheadPrices = await this.#getDayAheadElectricityData()
+    await dayAheadPrices.filter((element) => {
+      for (let i = 0; i < element.areas.length; i++) {
+       if(element.areas[i].area === biddingArea)
+       biddingAreaWithPrices.push(element.startTime + ': ' + element.areas[i].value + ': ' + element.areas[i].area)
+      }
+   })
+   return biddingAreaWithPrices
+
 
   }
 
@@ -29,8 +36,6 @@ export class DayAheadElectricityPrices {
   calculateConsumedWattToTime (watt) {
 
   }
-
-
 
   #getTomorrowsDate () {
     const todaysDate = new Date()
@@ -54,11 +59,11 @@ export class DayAheadElectricityPrices {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
     const rawData = await response.json()
     this.extractElectricityData = rawData.data.Rows
-    const extractedEnergyPrices = this.#extractDayAheadEnergyPrices()
+    const extractedEnergyPrices = this.#getDayAheadElectricityPrices()
     return extractedEnergyPrices
   }
 
-  #extractDayAheadEnergyPrices () {
+  #getDayAheadElectricityPrices () {
     console.log('extractDayAheadEnergyPrices')
     const dayAheadElectricityPrices = this.extractElectricityData.filter(row => !row.IsExtraRow).map((row) => {
       return {
@@ -71,8 +76,6 @@ export class DayAheadElectricityPrices {
         })
       }
     })
-    
     return dayAheadElectricityPrices
   }
 }
-
