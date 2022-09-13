@@ -11,16 +11,26 @@ export class DayAheadElectricityPrices {
     return dayAheadPrices
   }
 
-  async getPricesForSpecificArea (biddingArea) {
-    const biddingAreaWithPrices = []
-    const dayAheadPrices = await this.#getDayAheadElectricityData()
-    await dayAheadPrices.filter((element) => {
-      for (let i = 0; i < element.areas.length; i++) {
-       if(element.areas[i].area === biddingArea)
-       biddingAreaWithPrices.push(element.startTime + ': ' + element.areas[i].value + ': ' + element.areas[i].area)
+  async getPricesForSpecificBiddingZone (zoneValue) {
+    const dayAheadPricesForBiddingZones = await this.#getDayAheadElectricityData()
+    const biddingZoneWithPrices = []
+    const biddingZone = zoneValue
+
+      for (const element of dayAheadPricesForBiddingZones) {
+        const startTime = element.startTime.slice(11)
+        let pricePerKwh = 0
+        let zone = ''
+        for (const [key, value] of Object.entries(element.areas)) {
+          if (value.area === biddingZone) {
+            pricePerKwh = value.value
+            zone = value.area
+          }
+        }
+        biddingZoneWithPrices.push({ startTime, pricePerKwh, zone })
       }
-   })
-   return biddingAreaWithPrices
+
+      console.log(biddingZoneWithPrices)
+
   }
 
   convertWattToKilowatt (watt) {
@@ -32,9 +42,23 @@ export class DayAheadElectricityPrices {
 
   }
 
-  calculateConsumedWattToTime (watt) {
-
+  calculateConsumedWattToHours (watt) {
+    // W x h = wattHours
   }
+
+  calculateUsageOverAMonth (wattPerDay) {
+    // Wh per day X days, return watt per month
+  }
+
+  roundOffFetchedValueToPennies (value) {
+    // the hourly values being fetched can be round off to pennies
+  }
+
+  roundOffFetchedValuesToSEK (kiloWatt, value) {
+    // the hourly values being fetched can be round off to pennies
+  }
+
+
 
   #getTomorrowsDate () {
     const today = new Date()

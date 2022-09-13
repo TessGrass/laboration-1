@@ -4,13 +4,22 @@ class TestElectricityPricesModule {
   #dayAheadElectricityPrices
   constructor () {
     this.#dayAheadElectricityPrices = new DayAheadElectricityPrices()
-    this.getPricesAllAreas()
+    this.getDataFromAllPublicMethods()
+  }
+
+  async getDataFromAllPublicMethods() {
+    console.log ({
+      myComputerInKilowattUsage: this.#dayAheadElectricityPrices.convertWattToKilowatt(300),
+/*       electricityPricesForAllAreas: await this.#dayAheadElectricityPrices.getPricesAllAreas(), */
+      electricityPricesForSpecificArea: await this.#dayAheadElectricityPrices.getPricesForSpecificBiddingZone('SE3')
+    })
   }
 
   async getPricesAllAreas () {
     const pricesAllAreas = await this.#dayAheadElectricityPrices.getPricesAllAreas()
     console.log(pricesAllAreas)
   }
+
   async getPricesForSpecificArea () {
     const area = 'SE3'
     const pricesSpecificArea = await this.#dayAheadElectricityPrices.getPricesForSpecificArea(area)
@@ -18,8 +27,9 @@ class TestElectricityPricesModule {
   }
 
   convertWattToKilowatt () {
-    const kiloWatt = this.#dayAheadElectricityPrices.convertWattToKilowatt(300)
+    const kiloWatt = this.#dayAheadElectricityPrices.convertWattToKilowatt()
   }
 }
+
 
 new TestElectricityPricesModule()
