@@ -1,7 +1,12 @@
+import fetch from 'node-fetch'
 
 export class EnergyData {
   constructor () {
     this.tomorrowsDate = this.#getTomorrowsDate()
+  }
+
+  async getTomorrowsElectricityData() {
+    return await this.#tomorrowsElectricityData()
   }
 
   #getTomorrowsDate () {
@@ -20,7 +25,7 @@ export class EnergyData {
     return date.replaceAll('/', '-')
   }
 
-  async #getTomorrowsElectricityData () {
+  async #tomorrowsElectricityData () {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
     const unfilteredData = await response.json()
     const filteredElectricityData = unfilteredData.data.Rows
@@ -41,4 +46,4 @@ export class EnergyData {
     })
     return dayAheadPricesAndZones
   }
-}
+  }
