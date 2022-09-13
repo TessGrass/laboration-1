@@ -9,9 +9,9 @@ class TestElectricityPricesModule {
 
   async getDataFromAllPublicMethods() {
     console.log ({
-      myComputerInKilowattUsage: this.#dayAheadElectricityPrices.convertWattToKilowatt(300),
-/*       electricityPricesForAllAreas: await this.#dayAheadElectricityPrices.getPricesAllAreas(), */
-      electricityPricesForSpecificArea: await this.#dayAheadElectricityPrices.getPricesForSpecificBiddingZone('SE3')
+      /* myComputerInKilowattUsage: this.#dayAheadElectricityPrices.convertWattToKilowatt(300), */
+    electricityPricesForAllAreas: await this.#dayAheadElectricityPrices.getHourlyPricesAllBiddingZones()
+/*     electricityPricesForSpecificArea: await this.#dayAheadElectricityPrices.getHourlyPricesForOneBiddingZone('SE1') */
     })
   }
 

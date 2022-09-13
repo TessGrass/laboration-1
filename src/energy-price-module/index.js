@@ -1,36 +1,77 @@
 import fetch from 'node-fetch'
+import { EnergyData } from './energyData.js'
 
 export class DayAheadElectricityPrices {
+  #energyData
   constructor () {
-    this.extractElectricityData = ''
     this.tomorrowsDate = this.#getTomorrowsDate()
+    this.#energyData = new EnergyData()
   }
 
-  async getPricesAllAreas () {
-    const dayAheadPrices = await this.#getDayAheadElectricityData()
-    return dayAheadPrices
+  #getTomorrowsDate () {
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    return this.#convertToCorrectDateFormat(tomorrow)
   }
 
-  async getPricesForSpecificBiddingZone (zoneValue) {
-    const dayAheadPricesForBiddingZones = await this.#getDayAheadElectricityData()
-    const biddingZoneWithPrices = []
-    const biddingZone = zoneValue
+  #convertToCorrectDateFormat (tomorrowsDate) {
+    const date = tomorrowsDate.toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    return date.replaceAll('/', '-')
+  }
 
-      for (const element of dayAheadPricesForBiddingZones) {
-        const startTime = element.startTime.slice(11)
-        let pricePerKwh = 0
-        let zone = ''
-        for (const [key, value] of Object.entries(element.areas)) {
-          if (value.area === biddingZone) {
-            pricePerKwh = value.value
-            zone = value.area
+  async #getTomorrowsElectricityData () {
+    const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
+    const unfilteredData = await response.json()
+    const filteredElectricityData = unfilteredData.data.Rows
+    return this.#extractElectricityPricesAndZones(filteredElectricityData)
+  }
+
+  #extractElectricityPricesAndZones (electricityData) {
+    const dayAheadPricesAndZones = electricityData.filter(row => !row.IsExtraRow).map((row) => {
+      return {
+        startTime: row.StartTime,
+        areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
+          return {
+            value: element.Value,
+            zone: element.Name
           }
-        }
-        biddingZoneWithPrices.push({ startTime, pricePerKwh, zone })
+        })
       }
+    })
+    return dayAheadPricesAndZones
+  }
 
-      console.log(biddingZoneWithPrices)
+  async getHourlyPricesAllBiddingZones () {
+    return await this.#getTomorrowsElectricityData()
+  }
 
+  async getHourlyPricesForOneBiddingZone (theZone) {
+    const hourlyPricesForBiddingZones = await this.#getTomorrowsElectricityData()
+    const biddingZone = theZone
+    const hourlyPricesForZone = []
+
+    for (const element of hourlyPricesForBiddingZones) {
+      const startTime = this.extractStartTimeFromDate(element)
+      let pricePerKwh = 0
+      let zone = ''
+      for (const [key, value] of Object.entries(element.areas)) {
+        if (value.zone === biddingZone) {
+          pricePerKwh = value.value
+          zone = value.zone
+        }
+      }
+      hourlyPricesForZone.push({ startTime, pricePerKwh, zone })
+    }
+    return hourlyPricesForZone
+  }
+
+  extractStartTimeFromDate (element) {
+    return element.startTime.slice(11)
   }
 
   convertWattToKilowatt (watt) {
@@ -56,49 +97,5 @@ export class DayAheadElectricityPrices {
 
   roundOffFetchedValuesToSEK (kiloWatt, value) {
     // the hourly values being fetched can be round off to pennies
-  }
-
-
-
-  #getTomorrowsDate () {
-    const today = new Date()
-    const tomorrow = new Date(today)
-    tomorrow.setDate(today.getDate() + 1)
-    const correctDate = this.#convertToCorrectDateFormat(tomorrow)
-    return correctDate
-  }
-
-  #convertToCorrectDateFormat (theDate) {
-    const date = theDate.toLocaleDateString('en-GB', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    })
-    const convertedDate = date.replaceAll('/', '-')
-    return convertedDate
-  }
-
-  async #getDayAheadElectricityData () {
-    const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
-    const rawData = await response.json()
-    this.extractElectricityData = rawData.data.Rows
-    const extractedEnergyPrices = this.#getDayAheadElectricityPrices()
-    return extractedEnergyPrices
-  }
-
-  #getDayAheadElectricityPrices () {
-    console.log('extractDayAheadEnergyPrices')
-    const dayAheadElectricityPrices = this.extractElectricityData.filter(row => !row.IsExtraRow).map((row) => {
-      return {
-        startTime: row.StartTime,
-        areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
-          return {
-            value: element.Value,
-            area: element.Name
-          }
-        })
-      }
-    })
-    return dayAheadElectricityPrices
   }
 }
