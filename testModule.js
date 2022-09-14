@@ -1,4 +1,4 @@
-import { DayAheadElectricityPrices } from './src/energy-price-module/index.js'
+import { DayAheadElectricityPrices } from './energy-price-module/src/index.js'
 
 class TestElectricityPricesModule {
   #dayAheadElectricityPrices
@@ -8,28 +8,16 @@ class TestElectricityPricesModule {
   }
 
   async getDataFromAllPublicMethods() {
+    const zone = 'SE3'
     console.log ({
-      myComputerInKilowattUsage: this.#dayAheadElectricityPrices.convertWattToKilowatt(300),
-    electricityPricesForAllAreas: await this.#dayAheadElectricityPrices.getHourlyPricesAllBiddingZones(),
-    electricityPricesForSpecificArea: await this.#dayAheadElectricityPrices.getHourlyPricesForOneBiddingZone('SE1')
+    /* myComputerInKilowattUsage: this.#dayAheadElectricityPrices.convertWattToKilowatt('300'),  */
+    /* electricityPricesForAllAreas: await this.#dayAheadElectricityPrices.getHourlyPricesAllBiddingZones(), */
+    /* electricityPricesForSpecificZone: await this.#dayAheadElectricityPrices.getHourlyPricesForOneBiddingZone('SE1') */
+    /* sortHoursAccordingToHighestPrice: await this.#dayAheadElectricityPrices.sortHoursPerHighestPrice(zone) */
+    /* getWattHours: this.#dayAheadElectricityPrices.calculateConsumedWattToWattHours(300, 5) */
+        getTheDailySekCostForMyProduct: this.#dayAheadElectricityPrices.calculateCostPerDayForProduct(200, 5, 3) 
+      
     })
   }
-
-  async getPricesAllAreas () {
-    const pricesAllAreas = await this.#dayAheadElectricityPrices.getPricesAllAreas()
-    console.log(pricesAllAreas)
-  }
-
-  async getPricesForSpecificArea () {
-    const area = 'SE3'
-    const pricesSpecificArea = await this.#dayAheadElectricityPrices.getPricesForSpecificArea(area)
-    console.table(pricesSpecificArea)
-  }
-
-  convertWattToKilowatt () {
-    const kiloWatt = this.#dayAheadElectricityPrices.convertWattToKilowatt()
-  }
 }
-
-
 new TestElectricityPricesModule()
