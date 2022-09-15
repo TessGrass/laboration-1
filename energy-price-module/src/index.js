@@ -1,5 +1,5 @@
 import { EnergyData } from './energyData.js'
-import { validateIfNumber } from './validateInput.js'
+import { validateIfNumber, validateIfValidZone } from './validateInputHandler.js'
 
 export class DayAheadElectricityPrices {
   #energyData
@@ -7,62 +7,95 @@ export class DayAheadElectricityPrices {
     this.#energyData = new EnergyData()
   }
 
-  convertWattToKilowatt (watt) {
+  /**
+   * 
+   * @param {number} watt
+   * @returns {number} containing kilowatt.
+   */
+  calculateWattToKilowatt (watt) {
     const arrWatt = [watt]
     validateIfNumber(arrWatt)
-    const kiloWatt = (watt / 1000)
-    return kiloWatt
+    return (watt / 1000)
   }
 
-  convertKilowattToMegawatt (kilowatt) {
+  /**
+   *
+   * @param {number} kilowatt
+   * @returns {number} containing megawatt.
+   */
+  calculateKilowattToMegawatt (kilowatt) {
     const arrKilowatt = [kilowatt]
     validateIfNumber(arrKilowatt)
     return (kilowatt * 1000)
   }
 
-  calculateConsumedWattToWattHours (watt, hour) {
-    const value = [watt, hour]
+  /**
+   *
+   * @param {number} watt
+   * @param {number} hoursRunning
+   * @returns {number} containing watt hours.
+   */
+  calculateConsumedWattToWattHours (watt, hoursRunning) {
+    const value = [watt, hoursRunning]
     validateIfNumber(value)
-    return (watt * hour)
+    return (watt * hoursRunning)
   }
 
-  calculateWattUsageOverAMonth (watthour, ) {
+  calculateWattUsageOverAMonth (watthour) {
     // Wh per day X days, return watt per month
   }
 
-  
-  calculateCostPerDayForProduct (productWatt, priceOneKwh, hoursPerDay) {
-    const value = [productWatt, priceOneKwh, hoursPerDay]
+  /**
+   *
+   * @param {number} productWatt
+   * @param {number} pricePerKwh
+   * @param {number} hoursRunningPerDay
+   * 
+   * @returns {number} representing the cost/day in SEK.
+   */
+  calculateCostPerDayForProduct (productWatt, pricePerKwh, hoursRunningPerDay) {
+    const value = [productWatt, pricePerKwh, hoursRunningPerDay]
     validateIfNumber(value)
-    const kwh = this.convertWattToKilowatt (productWatt)
-    return (kwh * priceOneKwh * hoursPerDay)
-
+    const kwh = this.calculateWattToKilowatt(productWatt)
+    const costPerDay = (kwh * hoursRunningPerDay * pricePerKwh)
+    return this.#removeDecimalsInNumber(costPerDay)
   }
 
-  roundOffFetchedValueToPennies (value) {
-    // the hourly values being fetched can be round off to pennies
+  /**
+   * 
+   * @param {number} value
+   * @returns {number} number with two decimals.
+   */
+   #removeDecimalsInNumber (value) {
+    return Math.round(value * 100) / 100
   }
 
-  roundOffFetchedValuesToSEK (kiloWatt, value) {
-    // the hourly values being fetched can be round off to pennies
-  }
-
+  /**
+   *
+   * @returns {object} containing tomorrow's hourly prices.
+   */
   async getHourlyPricesAllBiddingZones () {
     return await this.#energyData.getTomorrowsElectricityData()
   }
 
-  async getHourlyPricesForOneBiddingZone (theZone) {
-    const hourlyPricesForBiddingZones = await this.getHourlyPricesAllBiddingZones()
-    const biddingZone = theZone
+  /**
+   *
+   * @param {string} selectedZone
+   * @returns {object} ontaining tomorrows price for a specific zone.
+   */
+  async getHourlyPricesForOneBiddingZone (selectedZone) {
+    validateIfValidZone(selectedZone)
+    const hourlyPricesForBiddingZones = await this.#energyData.getTomorrowsElectricityData()
+    const biddingZone = selectedZone
     const hourlyPricesForZone = []
 
     for (const element of hourlyPricesForBiddingZones) {
-      const startTime = this.extractStartTimeFromDate(element)
+      const startTime = this.#extractStartTimeFromDate(element)
       let pricePerKwh = 0
       let zone = ''
       for (const [key, value] of Object.entries(element.areas)) {
         if (value.zone === biddingZone) {
-          pricePerKwh = value.value.replaceAll(' ','')
+          pricePerKwh = value.pricePerKwh
           zone = value.zone
         }
       }
@@ -71,20 +104,36 @@ export class DayAheadElectricityPrices {
     return hourlyPricesForZone
   }
 
-  extractStartTimeFromDate (element) {
+  /**
+   *
+   * @param {string} element
+   * @returns {string} a string containing a timestamp.
+   */
+  #extractStartTimeFromDate (element) {
     return element.startTime.slice(11)
   }
 
-  async sortHoursPerHighestPrice(zone) {
+  /**
+   *
+   * @param {number} zone
+   * @returns {object} containing the sorted values.
+   */
+  async sortHoursPerHighestPrice (zone) {
+    validateIfValidZone(zone)
     const hourlyPricesForBiddingZone = await this.getHourlyPricesForOneBiddingZone(zone)
-    console.log(hourlyPricesForBiddingZone.sort((b, a) => parseFloat(a.pricePerKwh) - parseFloat(b.pricePerKwh)))
+    return hourlyPricesForBiddingZone.sort((b, a) => a.pricePerKwh - b.pricePerKwh)
   }
+
+  /**
+   *
+   * @param {number} zone - the zone being
+   * @returns {object} containing the sorted values.
+   */
+  async sortHoursPerLowestPrice (zone) {
+    validateIfValidZone(zone)
+    const hourlyPricesForBiddingZone = await this.getHourlyPricesForOneBiddingZone(zone)
+    return hourlyPricesForBiddingZone.sort((a, b) => a.pricePerKwh - b.pricePerKwh)
+  }
+
+  
 }
-
-
-  /*   hourlyPricesForBiddingZones.sort((a, b) => {
-      console.log(a.areas)
- console.log(a.pricePerKwh - b.pricePerKwh) 
- hourlyPricesForBiddingZones.sort( sortHoursPerHighestPrice ); 
-    }) */
-

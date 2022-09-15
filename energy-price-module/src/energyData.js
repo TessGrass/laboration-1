@@ -5,8 +5,8 @@ export class EnergyData {
     this.tomorrowsDate = this.#getTomorrowsDate()
   }
 
-  async getTomorrowsElectricityData() {
-    return await this.#tomorrowsElectricityData()
+  async getTomorrowsElectricityData () {
+    return await this.#fetchTomorrowsElectricityData()
   }
 
   #getTomorrowsDate () {
@@ -25,7 +25,7 @@ export class EnergyData {
     return date.replaceAll('/', '-')
   }
 
-  async #tomorrowsElectricityData () {
+  async #fetchTomorrowsElectricityData () {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
     const unfilteredData = await response.json()
     const filteredElectricityData = unfilteredData.data.Rows
@@ -37,8 +37,13 @@ export class EnergyData {
       return {
         startTime: row.StartTime,
         areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
+          const stringValue = element.Value.replaceAll(' ', '').replaceAll(',', '.')
+          const number = this.#convertStringToNumber(stringValue)
+          const value = this.#divideNumberWithTen(number)
+          const pennies = this.#removeDecimalsInNumber(value) || 0.00
+
           return {
-            value: element.Value,
+            pricePerKwh: pennies,
             zone: element.Name
           }
         })
@@ -46,4 +51,16 @@ export class EnergyData {
     })
     return dayAheadPricesAndZones
   }
+
+  #convertStringToNumber (string) {
+    return Number(string)
   }
+
+  #removeDecimalsInNumber (value) {
+    return Math.round(value * 100) / 100
+  }
+
+  #divideNumberWithTen (number) {
+    return (number / 10)
+  }
+}
