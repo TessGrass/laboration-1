@@ -72,7 +72,7 @@ export class DayAheadElectricityPrices {
 
   /**
    *
-   * @returns {object} containing tomorrow's hourly prices.
+   * @returns {object} containing tomorrow's hourly prices (in pennies).
    */
   async getHourlyPricesAllBiddingZones () {
     return await this.#energyData.getTomorrowsElectricityData()
@@ -81,7 +81,7 @@ export class DayAheadElectricityPrices {
   /**
    *
    * @param {string} selectedZone
-   * @returns {object} ontaining tomorrows price for a specific zone.
+   * @returns {object} - Containing tomorrows price (in pennies) for a specific zone.
    */
   async getHourlyPricesForOneBiddingZone (selectedZone) {
     validateIfValidZone(selectedZone)
@@ -116,7 +116,7 @@ export class DayAheadElectricityPrices {
   /**
    *
    * @param {number} zone
-   * @returns {object} containing the sorted values.
+   * @returns {object} - Containing the sorted prices (in pennies), from high to low.
    */
   async sortHoursPerHighestPrice (zone) {
     validateIfValidZone(zone)
@@ -127,7 +127,7 @@ export class DayAheadElectricityPrices {
   /**
    *
    * @param {number} zone - the zone being
-   * @returns {object} containing the sorted values.
+   * @returns {object} - Containing the sorted prices (in pennies), from low to high.
    */
   async sortHoursPerLowestPrice (zone) {
     validateIfValidZone(zone)
