@@ -12,7 +12,11 @@ export class ElectricityRatesProvider {
    * @returns {object} containing tomorrow's hourly prices (in pennies).
    */
   async getHourlyPricesAllBiddingZones () {
-    return await this.#spotPriceApi.getTomorrowsElectricityData()
+    const test = await this.#spotPriceApi.getTomorrowsElectricityData()
+    for (const element of test) {
+      console.log(element);
+      
+    }
   }
 
   /**
@@ -91,7 +95,7 @@ export class ElectricityRatesProvider {
   calculateKilowattToMegawatt (kilowatt) {
     const arrKilowatt = [kilowatt]
     validateIfNumber(arrKilowatt)
-    return (kilowatt * 1000)
+    return (kilowatt / 1000)
   }
 
   /**

@@ -32,18 +32,24 @@ npm install
 ```
 Laboration 1  
 │
-└───Energy-price-module/
+└───energy-price-module/
+│ │
+│ └───src/
+│     │───spotPriceApi.js
+│     │───index.js
+│     │───validateInputHandler.js
+│  
+└───test-rapport/
 │   │
-│   └───src/
-│       │   spotPriceApi.js
-│       │   index.js
-│       │   validateInputHandler.js
-│   
-│   package.json
-│   package-lock.json
-│   README.md
-│   testModule.js
-│   Testrapport.md
+│   └───images/
+│   │
+│   └─── TestRapport.md
+│  
+│
+│───package.json
+│───package-lock.json
+│───README.md
+│───testModule.js
 ```
 ---
 
@@ -57,8 +63,7 @@ Laboration 1
 ### **How To Test The Module And It's Methods**
 
 The testModule.js contains all the public methods you as a developer want to use in your project and  it runs the methods inside the console.log, as the image shows. Just comment out the method when you are done testing it. 
-![alt text](image.png)
-image.png
+
 To run the testModule.js just open the terminal and type:
 ```
 node testModule.js
