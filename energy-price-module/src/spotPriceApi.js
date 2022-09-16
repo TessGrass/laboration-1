@@ -1,12 +1,12 @@
 import fetch from 'node-fetch'
 
-export class EnergyData {
+export class SpotPriceApi {
   constructor () {
     this.tomorrowsDate = this.#getTomorrowsDate()
   }
 
   async getTomorrowsElectricityData () {
-    return await this.#fetchTomorrowsElectricityData()
+    return await this.#getTomorrowsElectricityData()
   }
 
   #getTomorrowsDate () {
@@ -25,7 +25,7 @@ export class EnergyData {
     return date.replaceAll('/', '-')
   }
 
-  async #fetchTomorrowsElectricityData () {
+  async #getTomorrowsElectricityData () {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
     const unfilteredData = await response.json()
     const filteredElectricityData = unfilteredData.data.Rows
@@ -37,6 +37,7 @@ export class EnergyData {
       return {
         startTime: row.StartTime,
         areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
+          
           const stringValue = element.Value.replaceAll(' ', '').replaceAll(',', '.')
           const number = this.#convertStringToNumber(stringValue)
           const value = this.#divideNumberWithTen(number)

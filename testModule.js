@@ -1,9 +1,9 @@
-import { DayAheadElectricityPrices } from './energy-price-module/src/index.js'
+import { ElectricityRatesProvider } from './energy-price-module/src/index.js'
 
 class TestElectricityPricesModule {
-  dayAheadElectricityPrices
+  electricityRatesProvider
   constructor () {
-    this.dayAheadElectricityPrices = new DayAheadElectricityPrices()
+    this.electricityRatesProvider = new ElectricityRatesProvider()
     this.getDataFromAllPublicMethods()
   }
 
@@ -12,17 +12,17 @@ class TestElectricityPricesModule {
     const watt = 100
     const kilowatt = 500
     const hoursRunning = 24
-    const pricePerKilowatt = 1.25
+    const penniesPerKilowatt = 125.00
   
     console.log ({
-      myComputerInKilowattUsage: this.dayAheadElectricityPrices.calculateWattToKilowatt(watt),
-      howMuchIsKiloWattInMegaWatt: this.dayAheadElectricityPrices.calculateKiloWattToMegaWatt(kilowatt),
-      howMuchElectricityDoMyProductUse: this.dayAheadElectricityPrices.calculateConsumedWattToWattHours(watt, hours), 
-      getTheDailySekCostForMyProduct: this.dayAheadElectricityPrices.calculateCostPerDayForProduct(watt, pricePerKilowatt, hoursRunning),
-      electricityPricesForAllAreas: await this.dayAheadElectricityPrices.getHourlyPricesAllBiddingZones(),
-      electricityPricesForSpecificZone: await this.dayAheadElectricityPrices.getHourlyPricesForOneBiddingZone(zone),
-      sortHoursAccordingToHighestPrice: await this.dayAheadElectricityPrices.sortHoursPerHighestPrice(zone),
-      sortHoursAccordingToLowestPrice: await this.dayAheadElectricityPrices.sortHoursPerLowestPrice(zone)
+/*       myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt), */
+/* howMuchIsKilowattInMegawatt: this.electricityRatesProvider.calculateKilowattToMegawatt(kilowatt) */
+/*  howMuchElectricityDoMyProductUse: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning), */
+/* myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateCostPerDayForProduct(watt, penniesPerKilowatt, hoursRunning) */
+/*       electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(), */
+      electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone),
+/*       sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone),*/
+/* sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone) */
     })
   }
 }

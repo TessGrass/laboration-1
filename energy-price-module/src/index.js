@@ -1,73 +1,10 @@
-import { EnergyData } from './energyData.js'
+import { SpotPriceApi } from './spotPriceApi.js'
 import { validateIfNumber, validateIfValidZone } from './validateInputHandler.js'
 
-export class DayAheadElectricityPrices {
-  #energyData
+export class ElectricityRatesProvider {
+  #spotPriceApi
   constructor () {
-    this.#energyData = new EnergyData()
-  }
-
-  /**
-   * 
-   * @param {number} watt
-   * @returns {number} containing kilowatt.
-   */
-  calculateWattToKilowatt (watt) {
-    const arrWatt = [watt]
-    validateIfNumber(arrWatt)
-    return (watt / 1000)
-  }
-
-  /**
-   *
-   * @param {number} kilowatt
-   * @returns {number} containing megawatt.
-   */
-  calculateKilowattToMegawatt (kilowatt) {
-    const arrKilowatt = [kilowatt]
-    validateIfNumber(arrKilowatt)
-    return (kilowatt * 1000)
-  }
-
-  /**
-   *
-   * @param {number} watt
-   * @param {number} hoursRunning
-   * @returns {number} containing watt hours.
-   */
-  calculateConsumedWattToWattHours (watt, hoursRunning) {
-    const value = [watt, hoursRunning]
-    validateIfNumber(value)
-    return (watt * hoursRunning)
-  }
-
-  calculateWattUsageOverAMonth (watthour) {
-    // Wh per day X days, return watt per month
-  }
-
-  /**
-   *
-   * @param {number} productWatt
-   * @param {number} pricePerKwh
-   * @param {number} hoursRunningPerDay
-   * 
-   * @returns {number} representing the cost/day in SEK.
-   */
-  calculateCostPerDayForProduct (productWatt, pricePerKwh, hoursRunningPerDay) {
-    const value = [productWatt, pricePerKwh, hoursRunningPerDay]
-    validateIfNumber(value)
-    const kwh = this.calculateWattToKilowatt(productWatt)
-    const costPerDay = (kwh * hoursRunningPerDay * pricePerKwh)
-    return this.#removeDecimalsInNumber(costPerDay)
-  }
-
-  /**
-   * 
-   * @param {number} value
-   * @returns {number} number with two decimals.
-   */
-   #removeDecimalsInNumber (value) {
-    return Math.round(value * 100) / 100
+    this.#spotPriceApi = new SpotPriceApi()
   }
 
   /**
@@ -75,7 +12,7 @@ export class DayAheadElectricityPrices {
    * @returns {object} containing tomorrow's hourly prices (in pennies).
    */
   async getHourlyPricesAllBiddingZones () {
-    return await this.#energyData.getTomorrowsElectricityData()
+    return await this.#spotPriceApi.getTomorrowsElectricityData()
   }
 
   /**
@@ -85,7 +22,7 @@ export class DayAheadElectricityPrices {
    */
   async getHourlyPricesForOneBiddingZone (selectedZone) {
     validateIfValidZone(selectedZone)
-    const hourlyPricesForBiddingZones = await this.#energyData.getTomorrowsElectricityData()
+    const hourlyPricesForBiddingZones = await this.#spotPriceApi.getTomorrowsElectricityData()
     const biddingZone = selectedZone
     const hourlyPricesForZone = []
 
@@ -133,6 +70,70 @@ export class DayAheadElectricityPrices {
     validateIfValidZone(zone)
     const hourlyPricesForBiddingZone = await this.getHourlyPricesForOneBiddingZone(zone)
     return hourlyPricesForBiddingZone.sort((a, b) => a.pricePerKwh - b.pricePerKwh)
+  }
+
+  /**
+   * 
+   * @param {number} watt
+   * @returns {number} containing kilowatt.
+   */
+   calculateWattToKilowatt (watt) {
+    const arrWatt = [watt]
+    validateIfNumber(arrWatt)
+    return (watt / 1000)
+  }
+
+  /**
+   *
+   * @param {number} kilowatt
+   * @returns {number} containing megawatt.
+   */
+  calculateKilowattToMegawatt (kilowatt) {
+    const arrKilowatt = [kilowatt]
+    validateIfNumber(arrKilowatt)
+    return (kilowatt * 1000)
+  }
+
+  /**
+   *
+   * @param {number} watt
+   * @param {number} hoursRunning
+   * @returns {number} containing watt hours.
+   */
+  calculateConsumedWattToWattHours (watt, hoursRunning) {
+    const value = [watt, hoursRunning]
+    validateIfNumber(value)
+    return (watt * hoursRunning)
+  }
+
+  calculateWattUsageOverAMonth (watthour) {
+    // Wh per day X days, return watt per month
+  }
+
+  /**
+   * Calculates the cost in pennies of running a device X hours / day.
+   * 
+   * @param {number} productWatt
+   * @param {number} pricePerKwh
+   * @param {number} hoursRunningPerDay
+   * 
+   * @returns {number} - The cost.
+   */
+  calculateCostPerDayForProduct (productWatt, penniesPerKwh, hoursRunningPerDay) {
+    const value = [productWatt, penniesPerKwh, hoursRunningPerDay]
+    validateIfNumber(value)
+    const kwh = this.calculateWattToKilowatt(productWatt)
+    const costPerDay = (kwh * hoursRunningPerDay * penniesPerKwh)
+    return this.#removeDecimalsInNumber(costPerDay)
+  }
+
+  /**
+   * 
+   * @param {number} value
+   * @returns {number} number with two decimals.
+   */
+   #removeDecimalsInNumber (value) {
+    return Math.round(value * 100) / 100
   }
 
   
