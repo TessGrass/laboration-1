@@ -107,6 +107,33 @@ export class ElectricityRatesProvider {
   }
 
   /**
+   * Calculates the kilowatt price for Propane.
+   *
+   * @param {*} propanePrice - The price purchased for the propane.
+   * @param {*} propaneKg - The weight of the purchased propane.
+   *
+   * @returns {number} - The calculated kwh price, in pennies, for propane.
+   */
+   calculatePropaneKilowattPrice (propanePrice, propaneKg) {
+    const propaneData = [propanePrice, propaneKg]
+    validateIfNumber(propaneData)
+    const propaneKwhPerKg = 12.8
+    const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
+    const propanePricePerKgInPennies = this.#convertCrownsToPennies(propanePricePerKg)
+    const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
+    const roundedKgPrice = this.#removeDecimalsInNumber(nonRoundedKgPrice)
+    return roundedKgPrice
+  }
+
+  #dividePropanePriceWithKilogram (price, kilogram) {
+    return (price / kilogram)
+  }
+
+  #convertCrownsToPennies (crowns) {
+    return (crowns * 100)
+  }
+
+  /**
    * Converts watt to kilowatt.
    *
    * @param {number} watt - The watt value.
@@ -170,34 +197,8 @@ export class ElectricityRatesProvider {
     return Math.round(value * 100) / 100
   }
 
-  /**
-   * Calculates the kilowatt price for Propane.
-   *
-   * @param {*} propanePrice - The price purchased for the propane.
-   * @param {*} propaneKg - The weight of the purchased propane.
-   *
-   * @returns {number} - The calculated kwh price, in pennies, for propane.
-   */
-  calculatePropaneKiloWattPrice (propanePrice, propaneKg) {
-    const propaneData = [propanePrice, propaneKg]
-    validateIfNumber(propaneData)
-    const propaneKwhPerKg = 12.8
-    const propanePricePerKg = this.#calcuatePropanePriceKilogram(propanePrice, propaneKg)
-    const propanePricePerKgInPennies = this.#convertCrownsToPennies(propanePricePerKg)
-    const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
-    const roundedKgPrice = this.#removeDecimalsInNumber(nonRoundedKgPrice)
-    return roundedKgPrice
-  }
 
-  #calcuatePropanePriceKilogram (price, kilogram) {
-    return (price / kilogram)
-  }
-
-  #convertCrownsToPennies (crowns) {
-    return (crowns * 100)
-  }
-
-  async getHoursWhenPropaneIsCheaper (propanePrice, selectedZone) {
+  /* async getHoursWhenPropaneIsCheaper (propanePrice, selectedZone) {
     const arrPropanePrice = [propanePrice]
     validateIfNumber(arrPropanePrice)
     validateIfValidZone(selectedZone)
@@ -217,5 +218,5 @@ export class ElectricityRatesProvider {
       }
     }
     return hoursWhenPropaneIsCheaper
-  }
+  } */
 }

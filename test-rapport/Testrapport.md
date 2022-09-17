@@ -5,18 +5,22 @@ Modulen har testats genom manuella tester vilket redovisas i den här rapporten.
 ## **ÖVERSIKT**
 
 ### **Klass ElectricityRatesProvider - index.js**
-| Metod | Status |
-| ----------- | ----------- |
-| getHourlyPricesAllBiddingZones() | ✅ |
-| getHourlyPricesForOneBiddingZone() | ✅ |
-| #extractStartTimeFromDate() | ✅ |
-| sortHoursPerHighestPrice() | ✅ |
-| sortHoursPerLowestPrice() | ✅ |
-| calculateWattToKilowatt() | ✅ |
-| calculateKilowattToMegawatt() | ✅ |
-| calculateConsumedWattToWattHours() | ✅ |
-| calculateCostPerDayForProduct() | ✅ |
-| #removeDecimalsInNumber() | ✅ |
+| Metod | Status | Testfall |
+| ----------- | ----------- |----------- |
+| getHourlyPricesAllBiddingZones() | ✅ | TF 1 |
+| getHourlyPricesForOneBiddingZone() | ✅ | TF 2 |
+| #extractStartTimeFromDate() | ✅ | TF 2 |
+| sortHoursPerHighestPrice() | ✅ | TF 3 |
+| sortHoursPerLowestPrice() | ✅ | TF 4 |
+| getHoursWhenPropaneIsCheaper() | ✅ | TF 5 |
+| calculatePropaneKilowattPrice() | ✅ | TF 5 |
+| #dividePropanePriceWithKilogram() | ✅ | TF 5 |
+| #convertCrownsToPennies() | ✅ | TF 5 |
+| calculateWattToKilowatt() | ✅ | TF 6 |
+| calculateKilowattToMegawatt() | ✅ | TF 7 |
+| calculateConsumedWattToWattHours() | ✅ | TF 8 |
+| calculateCostPerDayForProduct() | ✅ | TF 9 |
+| #removeDecimalsInNumber() | ✅ | TF 10 |
 
 ---
 
@@ -46,11 +50,11 @@ Modulen har testats genom manuella tester vilket redovisas i den här rapporten.
 Varje metod har testats manuellt och metoderna har körts via testModule.js och utfallet har dokumenterats nedan. <br>
 Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att samtliga privata metoder som återfinns i spotPriceApi.js är korrekta. Därav finns inga egna testfall över de metoder utan deras status blir per automatik ✅.
 
-# Test Fall
+# Testfall
 Öppna upp ett test för att ta del av utfallet
 <details>
 <summary>
-<b>Hämta timpriser för alla zoner</b>
+<b>TF 1. Hämta timpriser för alla zoner</b>
 </summary>
 <br>
 <b>TESTADE SCENARION, TOTAL 2 ST.</b>
@@ -70,12 +74,12 @@ Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att 
 </details>
 <details>
 <summary>
-<b>Hämta timpriser för en specifik zon.</b>
+<b>TF 2. Hämta timpriser för en specifik zon</b>
 </summary>
 <br>
-<b>TESTADE SCENARION, TOTAL 1 ST.</b>
+<b>TESTADE SCENARION, TOTAL 2 ST.</b>
 <br>
-1) Morgondagens timpriser för en specifik zon kan hämtas efter kl 13 dagen innan.<br>
+1) Morgondagens timpriser för en specifik zon kan hämtas efter kl 13 dagen innan. Klockslaget ska även vara extraherat ur datumet och presenteras för användaren. <br>
 
 ![Testutfall](./images/spotPricesOneZone.png)
 <br>
@@ -87,21 +91,7 @@ Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att 
 </details>
 <details>
 <summary>
-<b>Extrahera klockslag ur ett datum</b>
-</summary>
-<b>TESTADE SCENARION, TOTAL 1 ST.</b>
-<br>
-1) Vid utdrag av timpriset för en specifik zon så visas endast tiden<br>
-
-![Testutfall](./images/starttime.png)
-<br>
-
----
-</details>
-</details>
-<details>
-<summary>
-<b>Sortera timpriset från högt till lågt</b>
+<b>TF 3. Sortera timpriset från högt till lågt</b>
 </summary>
 <br>
 <b>TESTADE SCENARION, TOTAL 1 ST.</b>
@@ -114,7 +104,7 @@ Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att 
 </details>
 <details>
 <summary>
-<b>Sortera timpriset från lågt till högt</b>
+<b>TF 4. Sortera timpriset från lågt till högt</b>
 </summary>
 <br>
 <b>TESTADE SCENARION, TOTAL 1 ST.</b>
@@ -125,10 +115,31 @@ Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att 
 
 ---
 </details>
+<details>
+<summary>
+<b>TF 5. Räkna ut vilka timmar det är mer fördelaktigt att använda gasol</b>
+</summary>
+<b>TESTADE SCENARION, TOTAL 2 ST.</b>
+<br>
+1) Först räknas gasolens kilowattpris fram. Detta fås fram genom att ta gasolpriset delat på x-antal kg gasol vilket då ger ett kilopris. 
+Ett kg gasol genererar 12.8 kwh och genom att ta det framräknade kilopriset delat på 12.8 så får vi fram priset per kilowatt. Priset omvandlas sedan till svenska ören. I testet sätts gasolpriset till 225:- och vikten till 11 kg. Detta ger ett kilowattpris, i ören, på 159.8. <br><br>
+
+Kilopriset uträknat<br>
+![Testutfall](./images/DividedPriceWithKg.png)<br>
+Omvandlar kronor till ören.<br>
+![Testutfall](./images/CrownsToPennies.png)<br>
+Beräknat kilowatt pris<br>
+![Testutfall](./images/PropanePricePerKwh.png)
+
+2) Vidare används ovanstående kilowattpris till att jämföra under vilka timmar i en specifik zon det är mest fördelaktigt att använda gasol jämfört mot elektricitet. De timmar då elpriset per kilowatt är högre än gasolens pris per kilwatt filtreras ut och presenteras.
+
+![Testutfall](./images/HoursPropaneIsCheaper.png)
+
+---
 </details>
 <details>
 <summary>
-<b>Konvertera watt till kilowatt</b>
+<b>TF 6. Konvertera watt till kilowatt</b>
 </summary>
 TESTADE SCENARION, TOTAL 1 ST.
 <br>
@@ -139,7 +150,7 @@ Utfall:
 </details>
 <details>
 <summary>
-<b>Konvertera kilowatt till megawatt</b>
+<b>TF 7. Konvertera kilowatt till megawatt</b>
 </summary>
 TESTADE SCENARION, TOTAL 1 ST.
 <br>
@@ -150,7 +161,7 @@ Utfall:
 </details>
 <details>
 <summary>
-<b>Konvertera watt till wattimmar</b>
+<b>TF 8. Konvertera watt till wattimmar</b>
 </summary>
 TESTADE SCENARION, TOTAL 1 ST.
 <br>
@@ -160,7 +171,7 @@ TESTADE SCENARION, TOTAL 1 ST.
 </details>
 <details>
 <summary>
-<b>Kalkylera kostnad per dag för en produkt</b>
+<b>TF 9. Kalkylera kostnad per dag för en produkt</b>
 </summary>
 TESTADE SCENARION, TOTAL 1 ST.
 <br>
@@ -171,7 +182,7 @@ TESTADE SCENARION, TOTAL 1 ST.
 </details>
 <details>
 <summary>
-<b>Ta bort decimaler i ett värde</b>
+<b>TF 10. Ta bort decimaler i ett värde</b>
 </summary>
 TESTADE SCENARION, TOTAL 1 ST.
 <br>
