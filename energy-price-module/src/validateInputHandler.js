@@ -5,17 +5,28 @@ const zonesEnum = Object.freeze({
   zone3: 'SE3',
   zone4: 'SE4'
 })
-
-export function validateIfValidZone (string) {
-  const zone = string.toUpperCase()
+/**
+ * Check if the user's chosen zone is valid.
+ *
+ * @param {string} biddingZone - A possible zone.
+ * @returns - True if data matches a valid zone.
+ */
+export function validateIfValidZone (biddingZone) {
+  const zone = biddingZone.toUpperCase()
   if (Object.values(zonesEnum).includes(zone)) {
     return
   }
-  throw new Error('The entered zone is incorrect')
+  throw new Error('The selected zone does not exist')
 }
 
-export function validateIfNumber (array) {
-  array.forEach(element => {
+/**
+ * Checks for numbers.
+ *
+ * @param {*} arrData - an array of values.
+ * @returns - True if the values in the array is of type number.
+ */
+export function validateIfNumber (arrData) {
+  arrData.forEach(element => {
     if (typeof element === 'number') {
       return
     }

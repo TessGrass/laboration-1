@@ -37,7 +37,6 @@ export class SpotPriceApi {
       return {
         startTime: row.StartTime,
         areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
-          
           const stringValue = element.Value.replaceAll(' ', '').replaceAll(',', '.')
           const number = this.#convertStringToNumber(stringValue)
           const value = this.#divideNumberWithTen(number)

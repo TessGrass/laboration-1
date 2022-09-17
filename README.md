@@ -1,6 +1,6 @@
 # **Energy Price Module**
 
-The main goal of this module is to extract the day ahead prices for Sweden's bidding zones, SE1 - SE4. The data being recieved comes from Nord Pool's API which runs the leading power market in Europe. The prices are available from **1pm the day before** and as a developer you can choose to receive prices for all zones or a specific zone and to have a certain zone sorted from highest price to lowest, and vice versa. Also included in the module are a bunch of small methods that can further facilitate the calculation of electricity costs. More about them further down.
+The main goal of this module is to extract the day ahead prices for Sweden's bidding zones, SE1 - SE4. The data being recieved comes from Nord Pool's API which runs the leading power market in Europe. The prices are available from **1pm the day before** and as a developer you can choose to receive prices for all zones or a specific zone and to have a certain zone sorted from highest price to lowest, and vice versa. Also included in the module are a bunch of other methods that can further facilitate the calculation of electricity costs. More about them further down.
 #### Important! The module does not include the cost of electricity certificates, surcharges, energy tax, VAT and electricity grid costs.
 
 ---
@@ -56,14 +56,18 @@ Laboration 1
 
 ## **How To Use The Module In Your Project**
 * index.js is the main file which contains all the methods you want to use in your project.
-* spotPriceApi.js contains private methods that takes care of the API request.
+* spotPriceApi.js contains private methods that takes care of the API request /response.
 * validateInputHandler.js validates all inputs from a user and ensures that the entered value is correct.
 * testModule.js is a way for a developer to try out the module and it's public methods right-away!
 
 
 ### **How To Test The Module And It's Methods**
 
-The testModule.js contains all the public methods you as a developer want to use in your project and  it runs the methods inside the console.log, as the image shows. Just comment out the method when you are done testing it. 
+The testModule.js contains all the public methods you as a developer want to use in your project and it runs the methods inside a console.log, as the image shows.
+In the test module, each method is independent and get's it's arguments from the variables in the test module. In reality the methods can be combined to get the desired result. When you are done testing a method you can just comment it out.
+<br>
+
+![TestModule](./test-rapport/images/TestModuleOverview.png)
 
 To run the testModule.js just open the terminal and type:
 ```
