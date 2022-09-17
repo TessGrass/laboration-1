@@ -1,4 +1,5 @@
 import { ElectricityRatesProvider } from './energy-price-module/src/index.js'
+import { validateIfNumber } from './energy-price-module/src/validateInputHandler.js'
 
 class TestElectricityPricesModule {
   electricityRatesProvider
@@ -16,7 +17,7 @@ class TestElectricityPricesModule {
     const propanePriceInCrowns = 225
     const propaneKg = 11
     const penniesPerKwhPropane = 159.8
-    const zone = 'SE3'
+    const zone = 'S4'
     const watt = 100
     const kilowatt = 5
     const hoursRunning = 24
@@ -26,12 +27,14 @@ class TestElectricityPricesModule {
 /*     electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone), */
 /*     sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone), */
 /*     sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone), */
-hoursPropaneIsCheaperThanElectricity: await this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone),
+/* hoursPropaneIsCheaperThanElectricity: await this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone), */
 /*     propanePricePerKwhInPennies: this.electricityRatesProvider.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg), */
 /*     myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt),
     howMuchIsKilowattInMegawatt: this.electricityRatesProvider.calculateKilowattToMegawatt(kilowatt),
     convertedWattToWattHours: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning),
     myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateCostPerDayForProduct(watt, penniesPerKwh, hoursRunning) */
+    
+    IsTheArrayOnlyContainingNumbers: validateIfNumber([1,2,3,4])
     })
   }
 }

@@ -121,7 +121,7 @@ export class ElectricityRatesProvider {
     const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
     const propanePricePerKgInPennies = this.#convertCrownsToPennies(propanePricePerKg)
     const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
-    const roundedKgPrice = this.#removeDecimalsInNumber(nonRoundedKgPrice)
+    const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
     return roundedKgPrice
   }
 
@@ -184,16 +184,16 @@ export class ElectricityRatesProvider {
     validateIfNumber(value)
     const kwh = this.calculateWattToKilowatt(deviceWatt)
     const costPerDay = (kwh * hoursRunningPerDay * penniesPerKwh)
-    return this.#removeDecimalsInNumber(costPerDay)
+    return this.#roundsDecimalsInNumber(costPerDay)
   }
 
   /**
-   * Rounds a number to two decimal places.
+   * Rounds a number to at most two decimal places.
    *
    * @param {number} value - The number to be rounded.
    * @returns {number} - The rounded number.
    */
-  #removeDecimalsInNumber (value) {
+  #roundsDecimalsInNumber (value) {
     return Math.round(value * 100) / 100
   }
 

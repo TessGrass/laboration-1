@@ -1,12 +1,12 @@
 # Testspecifikation
 ## **BESKRIVNING**
-Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Ingra krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0.
+Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Inga krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0.
 
 ## **ÖVERSIKT**
 
 ### **Klass ElectricityRatesProvider - index.js**
 | Metod | Status | Testfall |
-| ----------- | ----------- |----------- |
+| ----------- | ----------- | ----------- |
 | getHourlyPricesAllBiddingZones() | ✅ | TF 1 |
 | getHourlyPricesForOneBiddingZone() | ✅ | TF 2 |
 | #extractStartTimeFromDate() | ✅ | TF 2 |
@@ -20,35 +20,34 @@ Modulen har testats genom manuella tester vilket redovisas i den här rapporten.
 | calculateKilowattToMegawatt() | ✅ | TF 7 |
 | calculateConsumedWattToWattHours() | ✅ | TF 8 |
 | calculateCostPerDayForProduct() | ✅ | TF 9 |
-| #removeDecimalsInNumber() | ✅ | TF 10 |
+| #roundDecimalsInNumber() | ✅ | TF 10 |
 
 ---
 
 ### **Klass SpotPriceApi - spotPriceApi.js**
-| Metod | Status |
-| ----------- | ----------- |
-| #getTomorrowsElectricityData() | ✅ |
-| #getTomorrowsDate() | ✅ |
-| #convertToCorrectDateFormat() | ✅ |
-| #getTomorrowsElectricityData() | ✅ |
-| #extractElectricityPricesAndZones() | ✅ |
-| #convertStringToNumber() | ✅ |
-| #removeDecimalsInNumber() | ✅ |
-| #divideNumberWithTen() | ✅ |
+| Metod | Status | Testfall |
+| ----------- | ----------- | ----------- |
+| getTomorrowsElectricityData() | ✅ | TF 1 |
+| #getTomorrowsDate() | ✅ | TF 1 |
+| #convertToCorrectDateFormat() | ✅ | TF 1 |
+| #getDayAheadData() | ✅ | TF 1 |
+| #extractElectricityPricesAndZones() | ✅ | TF 1 |
+| #convertStringToNumber() | ✅ | TF 1
+| #divideNumberWithTen() | ✅ | TF 1
 
 ---
 
 ### **validateInputHander.js**
-| Metod | Status |
-| ----------- | ----------- |
-| validateIfValidZone() | ✅ |
-| validateIfNumber() | ✅ |
+| Metod | Status | Testfall |
+| ----------- | ----------- | ----------- |
+| validateIfValidZone() | ✅ | TF 11 |
+| validateIfNumber() | ✅ | TF 12 |
 
 <br>
 
 # **TESTRAPPORT**
 Varje metod har testats manuellt och metoderna har körts via testModule.js och utfallet har dokumenterats nedan. <br>
-Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att samtliga privata metoder som återfinns i spotPriceApi.js är korrekta. Därav finns inga egna testfall över de metoder utan deras status blir per automatik ✅.
+Förkrav för att nedanstående testfall ska kunnat genomföras korrekt och ge ett korrekt utfall är att samtliga privata metoder som återfinns i spotPriceApi.js är korrekta. Därav finns inga egna testfall över de metoder utan deras status ingår i TF 1.
 
 # Testfall
 Öppna upp ett test för att ta del av utfallet
@@ -119,6 +118,7 @@ Förkrav för att nedanstående testfall ska kunnat genomföras korrekt är att 
 <summary>
 <b>TF 5. Räkna ut vilka timmar det är mer fördelaktigt att använda gasol</b>
 </summary>
+<br>
 <b>TESTADE SCENARION, TOTAL 2 ST.</b>
 <br>
 1) Först räknas gasolens kilowattpris fram. Detta fås fram genom att ta gasolpriset delat på x-antal kg gasol vilket då ger ett kilopris. 
@@ -141,7 +141,8 @@ Beräknat kilowatt pris<br>
 <summary>
 <b>TF 6. Konvertera watt till kilowatt</b>
 </summary>
-TESTADE SCENARION, TOTAL 1 ST.
+<br>
+<b>TESTADE SCENARION, TOTAL 1 ST.</b>
 <br>
 1) För att konvertera watt till kilowatt så används formeln P(kW) = P(W) / 1000. Således så ska värdet 100 som skickas in till metoden resultera i värdet 0.1. 
 Utfall:
@@ -152,7 +153,8 @@ Utfall:
 <summary>
 <b>TF 7. Konvertera kilowatt till megawatt</b>
 </summary>
-TESTADE SCENARION, TOTAL 1 ST.
+<br>
+<b>TESTADE SCENARION, TOTAL 1 ST.</b>
 <br>
 1) För att konvertera kilowatt till megawatt så används formeln P(MW) = P(kW) / 1000. Således så ska värdet 5 som skickas in till metoden resultera i värdet 0.005. 
 Utfall:
@@ -163,7 +165,8 @@ Utfall:
 <summary>
 <b>TF 8. Konvertera watt till wattimmar</b>
 </summary>
-TESTADE SCENARION, TOTAL 1 ST.
+<br>
+<b>TESTADE SCENARION, TOTAL 1 ST.</b>
 <br>
 1) För att konvertera watt till wattimmar så används formeln W X h = Wh. Således så ska värdet (100, 24) som skickas in resultera i värdet 2400.<br>Utfall:
 
@@ -173,7 +176,8 @@ TESTADE SCENARION, TOTAL 1 ST.
 <summary>
 <b>TF 9. Kalkylera kostnad per dag för en produkt</b>
 </summary>
-TESTADE SCENARION, TOTAL 1 ST.
+<br>
+<b>TESTADE SCENARION, TOTAL 1 ST.</b>
 <br>
 1) För att räkna ut hur mycket en apparat kostar per dag så används formeln (kwh * timmar * pris). Således så ska värdet (100, 24, 125.00) som skickas in resultera i värdet 300, värdet avser ören.<br>Utfall:
 
@@ -182,14 +186,51 @@ TESTADE SCENARION, TOTAL 1 ST.
 </details>
 <details>
 <summary>
-<b>TF 10. Ta bort decimaler i ett värde</b>
+<b>TF 10. Avrunda decimaler i ett värde</b>
 </summary>
-TESTADE SCENARION, TOTAL 1 ST.
 <br>
-1) Ett värde som innehåller decimaler ska returneras utan dessa.
+<b>TESTADE SCENARION, TOTAL 1 ST.</b>
+<br>
+1) Ett värde som innehåller decimaler ska returneras med maximalt två decimaler.
 <br>Utfall:
 
 ![Testutfall](./images/removedDecimal.png)
+</details>
+<details>
+<summary>
+<b>TF 11. Validera vald zon</b>
+</summary>
+<br>
+<b>TESTADE SCENARION, TOTAL 2 ST.</b><br>
+Valideringen sker mot ett enum/objekt som består av Sveriges fyra elområden.<br>
+
+![Testutfall](./images/EnumZone.png)<br>
+1) Kontroll görs att korrekt zon, oavsett om den matas in med gemener eller versaler, hanteras som true.
+<br>Utfall:
+
+![Testutfall](./images/ValidZone.png)<br>
+2) Kontroll görs att en felaktig zon kastar ett fel.
+<br>Utfall:
+
+![Testutfall](./images/ZonedoesntExists.png)<br>
+</details>
+<details>
+<summary>
+<b>TF 12. Validera datatyp Number </b>
+</summary>
+<br>
+<b>TESTADE SCENARION, TOTAL 2 ST.</b><br>
+
+1) Kontroll görs att en array som enbart består av datatyp Number returneras som true. 
+<br>Utfall:
+
+![Testutfall](./images/ValidateNumbers.png)<br>
+![Testutfall](./images/ArrayContainsOnlyNumbers.png)<br>
+2) Kontroll görs att en array som inte innehåller enbart datatyp Number kastar ett fel
+<br>Utfall:
+
+![Testutfall](./images/ValidateNumbersWithString.png)<br>
+![Testutfall](./images/ErrorNumbers.png)<br>
 </details>
 <br>
 
