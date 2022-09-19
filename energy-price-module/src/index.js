@@ -25,7 +25,6 @@ export class ElectricityRatesProvider {
   async getHourlyPricesForOneBiddingZone (selectedZone) {
     validateIfValidZone(selectedZone)
     const hourlyPricesForBiddingZones = await this.getHourlyPricesAllBiddingZones()
-/*     const biddingZone = selectedZone */
     const hourlyPricesForZone = []
 
     for (const element of hourlyPricesForBiddingZones) {
@@ -77,8 +76,35 @@ export class ElectricityRatesProvider {
     return hourlyPricesForBiddingZone.sort((a, b) => a.pricePerKwh - b.pricePerKwh)
   }
 
+    /**
+   * Calculates the kilowatt price for Propane.
+   *
+   * @param {*} propanePrice - The price purchased for the propane.
+   * @param {*} propaneKg - The weight of the purchased propane.
+   *
+   * @returns {number} - The calculated kwh price, in pennies, for propane.
+   */
+     calculatePropaneKilowattPrice (propanePrice, propaneKg) {
+      const propaneData = [propanePrice, propaneKg]
+      validateIfNumber(propaneData)
+      const propaneKwhPerKg = 12.8
+      const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
+      const propanePricePerKgInPennies = this.#calculateCrownsToPennies(propanePricePerKg)
+      const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
+      const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
+      return roundedKgPrice
+    }
+  
+    #dividePropanePriceWithKilogram (price, kilogram) {
+      return (price / kilogram)
+    }
+  
+    #calculateCrownsToPennies (crowns) {
+      return (crowns * 100)
+    }
+  
   /**
-   * Fiters out which hours propane is cheaper to use than electricity.
+   * Filters out which hours propane is cheaper to use than electricity.
    *
    * @param {*} propanePrice  - the price per kwh for propane.
    * @param {*} selectedZone  - The specific zone.
@@ -88,10 +114,8 @@ export class ElectricityRatesProvider {
     const arrPropanePrice = [propanePricePerKwh]
     validateIfNumber(arrPropanePrice)
     validateIfValidZone(selectedZone)
-
     const hourlyPricesAllZones = await this.getHourlyPricesAllBiddingZones()
     const hoursWhenPropaneIsCheaper = []
-
     for (const element of hourlyPricesAllZones) {
       const startTime = this.#extractStartTimeFromDate(element)
       for (const [key, value] of Object.entries(element.areas)) {
@@ -104,33 +128,6 @@ export class ElectricityRatesProvider {
       }
     }
     return hoursWhenPropaneIsCheaper
-  }
-
-  /**
-   * Calculates the kilowatt price for Propane.
-   *
-   * @param {*} propanePrice - The price purchased for the propane.
-   * @param {*} propaneKg - The weight of the purchased propane.
-   *
-   * @returns {number} - The calculated kwh price, in pennies, for propane.
-   */
-   calculatePropaneKilowattPrice (propanePrice, propaneKg) {
-    const propaneData = [propanePrice, propaneKg]
-    validateIfNumber(propaneData)
-    const propaneKwhPerKg = 12.8
-    const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
-    const propanePricePerKgInPennies = this.#convertCrownsToPennies(propanePricePerKg)
-    const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
-    const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
-    return roundedKgPrice
-  }
-
-  #dividePropanePriceWithKilogram (price, kilogram) {
-    return (price / kilogram)
-  }
-
-  #convertCrownsToPennies (crowns) {
-    return (crowns * 100)
   }
 
   /**

@@ -1,6 +1,6 @@
 # Testspecifikation
 ## **BESKRIVNING**
-Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Inga krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0.
+Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Inga krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0. Vid eventuella frågor kring installationen eller hur modulen så finns svaren i Readme.md.
 
 ## **ÖVERSIKT**
 
@@ -12,8 +12,8 @@ Modulen har testats genom manuella tester vilket redovisas i den här rapporten.
 | #extractStartTimeFromDate() | ✅ | TF 2 |
 | sortHoursPerHighestPrice() | ✅ | TF 3 |
 | sortHoursPerLowestPrice() | ✅ | TF 4 |
-| getHoursWhenPropaneIsCheaper() | ✅ | TF 5 |
 | calculatePropaneKilowattPrice() | ✅ | TF 5 |
+| getHoursWhenPropaneIsCheaper() | ✅ | TF 5 |
 | #dividePropanePriceWithKilogram() | ✅ | TF 5 |
 | #convertCrownsToPennies() | ✅ | TF 5 |
 | calculateWattToKilowatt() | ✅ | TF 6 |

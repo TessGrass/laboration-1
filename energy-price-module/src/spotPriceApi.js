@@ -26,10 +26,15 @@ export class SpotPriceApi {
   }
 
   async #getDayAheadData () {
-    const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`) // new method, change to get
-    const unfilteredData = await response.json()
-    const filteredElectricityData = unfilteredData.data.Rows
-    return this.#extractElectricityPricesAndZones(filteredElectricityData)
+    const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`)
+    if(response.status === 200) {
+      const unfilteredData = await response.json()
+      const filteredElectricityData = unfilteredData.data.Rows
+      return this.#extractElectricityPricesAndZones(filteredElectricityData)
+    } else {
+      throw new Error('Something went wrong with the request')
+    }
+
   }
 
   #extractElectricityPricesAndZones (electricityData) {
@@ -41,7 +46,6 @@ export class SpotPriceApi {
           const number = this.#convertStringToNumber(stringValue)
           const value = this.#divideNumberWithTen(number)
           const pennies = this.#roundDecimalsFoundInNumber(value) || 0.00
-
           return {
             pricePerKwh: pennies,
             zone: element.Name
@@ -51,6 +55,8 @@ export class SpotPriceApi {
     })
     return dayAheadPricesAndZones
   }
+
+
 
   #convertStringToNumber (stringOfNumbers) {
     return Number(stringOfNumbers)

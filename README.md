@@ -64,7 +64,7 @@ Laboration 1
 ### **How To Test The Module And It's Methods**
 
 The testModule.js contains all the public methods you as a developer want to use in your project and it runs the methods inside a console.log, as the image shows.
-In the test module, each method is independent and get's it's arguments from the variables in the test module. In reality the methods can be combined to get the desired result. When you are done testing a method you can just comment it out.
+In order to quickly and easily get started with testing the module, each method is independent and gets its arguments ​​from the variables directly in the test module, feel free to elaborate with them yourself! When you are done testing a method you can just comment that one out.
 <br>
 
 ![TestModule](./test-rapport/images/TestModuleOverview.png)
@@ -87,7 +87,7 @@ npm start
 '# returns day ahead prices for all bidding zones'
 getHourlyPricesAllBiddingZones()
 
-'# returns day ahead prices, in pennies, for a specific zone. If no prices are found it returns 0. See example below'
+'# returns day ahead prices, in pennies, for a specific zone. If no prices are found it returns 0'
 getHourlyPricesForOneBiddingZone(zone)
 
 '# returns the prices for a specific zone, sorted from highest to lowest'
@@ -95,6 +95,12 @@ sortHoursPerHighestPrice(zone)
 
 '# returns the prices for a specific zone, sorted from lowest to highest'
 sortHoursPerLowestPrice(zone)
+
+'# returns the kilowatt price, in pennies, for propane'
+calculatePropaneKilowattPrice (propanePrice, propaneKg)
+
+'# returns the hours when the propane, per kilowatt, is cheaper than kilowatt'
+getHoursWhenPropaneIsCheaper(propanePricePerKwh, selectedZone)
 
 '# returns kilowatt'
 calculateWattToKilowatt(watt)
