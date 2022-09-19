@@ -9,7 +9,6 @@ const zonesEnum = Object.freeze({
  * Check if the user's chosen zone is valid.
  *
  * @param {string} biddingZone - A possible zone.
- * @returns - True if data matches a valid zone.
  */
 export function validateIfValidZone (biddingZone) {
   const zone = biddingZone.toUpperCase()
@@ -20,10 +19,9 @@ export function validateIfValidZone (biddingZone) {
 }
 
 /**
- * Checks for numbers.
+ * Checks for datatype number.
  *
  * @param {*} arrData - an array of values.
- * @returns - True if the values in the array is of type number.
  */
 export function validateIfNumber (arrData) {
   arrData.forEach(element => {

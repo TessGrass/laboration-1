@@ -1,14 +1,27 @@
 import fetch from 'node-fetch'
 
 export class SpotPriceApi {
+  /**
+   * The constructor for SpotPriceApi class.
+   */
   constructor () {
     this.tomorrowsDate = this.#getTomorrowsDate()
   }
 
+  /**
+   * Gets tomorrows data from NordPool.
+   *
+   * @returns {Array} tomorrows data.
+   */
   async getTomorrowsElectricityData () {
     return await this.#getDayAheadData()
   }
 
+  /**
+   * Gets tomorrows date.
+   *
+   * @returns {string} - The date needed to send the request.
+   */
   #getTomorrowsDate () {
     const today = new Date()
     const tomorrow = new Date(today)
@@ -16,6 +29,12 @@ export class SpotPriceApi {
     return this.#convertToCorrectDateFormat(tomorrow)
   }
 
+  /**
+   * Converts the date to the format needed in the api request.
+   *
+   * @param {string} tomorrowsDate  - Tomorrows date.
+   * @returns {string} - Tomorrows date in correct format.
+   */
   #convertToCorrectDateFormat (tomorrowsDate) {
     const date = tomorrowsDate.toLocaleDateString('en-GB', {
       year: 'numeric',
@@ -25,18 +44,28 @@ export class SpotPriceApi {
     return date.replaceAll('/', '-')
   }
 
+  /**
+   * Gets tomorrows data from NordPool.
+   *
+   * @returns {Array} - The hourly prices for all bidding zones.
+   */
   async #getDayAheadData () {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`)
-    if(response.status === 200) {
+    if (response.status === 200) {
       const unfilteredData = await response.json()
       const filteredElectricityData = unfilteredData.data.Rows
       return this.#extractElectricityPricesAndZones(filteredElectricityData)
     } else {
       throw new Error('Something went wrong with the request')
     }
-
   }
 
+  /**
+   * Extracts information from the response.
+   *
+   * @param {Array} electricityData - The array with the unfiltered response data.
+   * @returns {Array} - The filtered data contains hourly prices and zones.
+   */
   #extractElectricityPricesAndZones (electricityData) {
     const dayAheadPricesAndZones = electricityData.filter(row => !row.IsExtraRow).map((row) => {
       return {
@@ -56,16 +85,32 @@ export class SpotPriceApi {
     return dayAheadPricesAndZones
   }
 
-
-
+  /**
+   * Converts string to number.
+   *
+   * @param {string} stringOfNumbers - A string with numbers.
+   * @returns {number} - the same numbers converted to datatype Number.
+   */
   #convertStringToNumber (stringOfNumbers) {
     return Number(stringOfNumbers)
   }
 
+  /**
+   * Rounds decimals found in number.
+   *
+   * @param {number} value - The number to be rounded.
+   * @returns {number} - Rounded number.
+   */
   #roundDecimalsFoundInNumber (value) {
     return Math.round(value * 100) / 100
   }
 
+  /**
+   * Divides a number by ten.
+   *
+   * @param {number} number  - A number.
+   * @returns {number} - The number divided by ten.
+   */
   #divideNumberWithTen (number) {
     return (number / 10)
   }

@@ -4,7 +4,7 @@ class TestElectricityPricesModule {
   electricityRatesProvider
   constructor () {
     this.electricityRatesProvider = new ElectricityRatesProvider()
-    this.getDataFromAllPublicMethods()
+    this.showDataFromAllPublicMethods()
   }
 
   /**
@@ -12,7 +12,7 @@ class TestElectricityPricesModule {
    * Fell free to change the values in the variables.
    * Just comment out the method you have successfully tested.
    */
-  async getDataFromAllPublicMethods() {
+  async showDataFromAllPublicMethods() {
     const propanePriceInCrowns = 225
     const propaneKg = 11
     const penniesPerKwhPropane = 159.8
@@ -22,10 +22,10 @@ class TestElectricityPricesModule {
     const hoursRunning = 24
     const penniesPerKwh = 125.00
     console.log ({
-    electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(),
+/*     electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(), */
 /*     electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone), */
 /*     sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone), */
-/*     sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone), */
+    sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone),
 /*     propanePricePerKwhInPennies: this.electricityRatesProvider.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg), */
 /* hoursPropaneIsCheaperThanElectricity: await this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone), */
 /*     myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt),

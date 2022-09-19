@@ -3,6 +3,10 @@ import { validateIfNumber, validateIfValidZone } from './validateInputHandler.js
 
 export class ElectricityRatesProvider {
   #spotPriceApi
+
+  /**
+   * Constructor for ElectricityRatesProvider.
+   */
   constructor () {
     this.#spotPriceApi = new SpotPriceApi()
   }
@@ -76,7 +80,7 @@ export class ElectricityRatesProvider {
     return hourlyPricesForBiddingZone.sort((a, b) => a.pricePerKwh - b.pricePerKwh)
   }
 
-    /**
+  /**
    * Calculates the kilowatt price for Propane.
    *
    * @param {*} propanePrice - The price purchased for the propane.
@@ -84,31 +88,44 @@ export class ElectricityRatesProvider {
    *
    * @returns {number} - The calculated kwh price, in pennies, for propane.
    */
-     calculatePropaneKilowattPrice (propanePrice, propaneKg) {
-      const propaneData = [propanePrice, propaneKg]
-      validateIfNumber(propaneData)
-      const propaneKwhPerKg = 12.8
-      const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
-      const propanePricePerKgInPennies = this.#calculateCrownsToPennies(propanePricePerKg)
-      const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
-      const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
-      return roundedKgPrice
-    }
-  
-    #dividePropanePriceWithKilogram (price, kilogram) {
-      return (price / kilogram)
-    }
-  
-    #calculateCrownsToPennies (crowns) {
-      return (crowns * 100)
-    }
-  
+  calculatePropaneKilowattPrice (propanePrice, propaneKg) {
+    const propaneData = [propanePrice, propaneKg]
+    validateIfNumber(propaneData)
+    const propaneKwhPerKg = 12.8
+    const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
+    const propanePricePerKgInPennies = this.#calculateCrownsToPennies(propanePricePerKg)
+    const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
+    const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
+    return roundedKgPrice
+  }
+
+  /**
+   * Gets the propane kilogram price.
+   *
+   * @param {number} price - The price for the propane.
+   * @param {number} kilogram  - the weight of the propane.
+   * @returns {number} - The kilogram price.
+   */
+  #dividePropanePriceWithKilogram (price, kilogram) {
+    return (price / kilogram)
+  }
+
+  /**
+   * Calculates crowns to pennies.
+   *
+   * @param {number} crowns - The value in crowns.
+   * @returns {number} - The value converted to pennies.
+   */
+  #calculateCrownsToPennies (crowns) {
+    return (crowns * 100)
+  }
+
   /**
    * Filters out which hours propane is cheaper to use than electricity.
    *
-   * @param {*} propanePrice  - the price per kwh for propane.
+   * @param {*} propanePricePerKwh  - The price per kWh for propane.
    * @param {*} selectedZone  - The specific zone.
-   * @returns 
+   * @returns {Array} - An array with the hours.
    */
   async getHoursWhenPropaneIsCheaper (propanePricePerKwh, selectedZone) {
     const arrPropanePrice = [propanePricePerKwh]
@@ -122,7 +139,7 @@ export class ElectricityRatesProvider {
         if (value.zone === selectedZone && value.pricePerKwh > propanePricePerKwh) {
           const pricePerKwh = value.pricePerKwh
           const zone = value.zone
-          const propanePerKwh = propanePricePerKwh     
+          const propanePerKwh = propanePricePerKwh
           hoursWhenPropaneIsCheaper.push({ startTime, pricePerKwh, zone, propanePerKwh })
         }
       }
@@ -143,7 +160,7 @@ export class ElectricityRatesProvider {
   }
 
   /**
-   * Coverts kilowatt to megawatt.
+   * Converts kilowatt to megawatt.
    *
    * @param {number} kilowatt - The kilowatt value.
    * @returns {number} - Containing the calculated megawatt.
@@ -155,7 +172,7 @@ export class ElectricityRatesProvider {
   }
 
   /**
-   * Caclulcates watt to watt hours.
+   * Calulcates watt to watt hours.
    *
    * @param {number} watt - The watt value.
    * @param {number} hoursRunning - Hours the device is running.
@@ -193,7 +210,6 @@ export class ElectricityRatesProvider {
   #roundsDecimalsInNumber (value) {
     return Math.round(value * 100) / 100
   }
-
 
   /* async getHoursWhenPropaneIsCheaper (propanePrice, selectedZone) {
     const arrPropanePrice = [propanePrice]

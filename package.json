@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node testModule.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint energy-price-module/src/validateInputHandler.js || exit 0",
+    "lint": "npx eslint energy-price-module/src/spotPriceApi.js || exit 0",
     "lint:fix": "npx eslint energy-price-module/src/index.js --fix || exit 0"
   },
   "repository": {
