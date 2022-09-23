@@ -22,6 +22,13 @@ With today's electricity market in mind, this module was created as a tool for u
 ---
 
 ## **Installation**
+Clone the repository from Github by running the following command in the terminal. The repot will be cloned down where the terminal path points to:
+ ```
+ git clone https://github.com/TessGrass/laboration-1.git
+ ```
+
+Open the cloned repo with any IDE, for example Visual Studio Code.
+
 Use the package manager npm to install the module and it's dependencies. To install, simply type the following command in the terminal:
 ```bash
 npm install
@@ -86,34 +93,34 @@ npm start
 
 ## **A Quick Overview Of The Available Methods In index.js**
 ```javascript
-'# returns day ahead prices for all bidding zones'
+'returns day ahead prices for all bidding zones'
 getHourlyPricesAllBiddingZones()
 
-'# returns day ahead prices, in pennies, for a specific zone. If no prices are found it returns 0'
+'returns day ahead prices, in pennies, for a specific zone. If no prices are found it returns 0'
 getHourlyPricesForOneBiddingZone(zone)
 
-'# returns the prices for a specific zone, sorted from highest to lowest'
+'returns the prices for a specific zone, sorted from highest to lowest'
 sortHoursPerHighestPrice(zone)
 
-'# returns the prices for a specific zone, sorted from lowest to highest'
+'returns the prices for a specific zone, sorted from lowest to highest'
 sortHoursPerLowestPrice(zone)
 
-'# returns the kilowatt price, in pennies, for propane'
+'returns the kilowatt price, in pennies, for propane'
 calculatePropaneKilowattPrice (propanePrice, propaneKg)
 
-'# returns the hours when the propane, per kilowatt, is cheaper than kilowatt'
+'returns the hours when the propane, per kilowatt, is cheaper than kilowatt'
 getHoursWhenPropaneIsCheaper(propanePricePerKwh, selectedZone)
 
-'# returns kilowatt'
+'returns kilowatt'
 calculateWattToKilowatt(watt)
 
-'# returns megawatt'
+'returns megawatt'
 calculateKilowattToMegawatt(kilowatt)
 
-'# returns watt hours'
+'returns watt hours'
 calculateConsumedWattToWattHours(watt, hoursRunning)
 
-'# returns the daily cost of running a device'
+'returns the daily cost of running a device'
 calculateCostPerDayForProduct(watt, penniesPerKilowatt, hoursRunning)
 ```
 

@@ -30,6 +30,8 @@ Beskriv hur du anpassat din kod och instruktioner för att någon annan programm
 ​
 ## Beskrivning av min kod
 Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. Använd det ni lärt er så här långt i 1dv607. Kommunicera så att jag kan förstå.
+
+Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop, responen är ju kärnan i min modul, och därav kan man tycka att den är den allra viktigaste. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflektar ganska mycket kring min modul i Reflektion.md så läs gärna där) 
 ​
 ## Hur jag testat
 Beskriv hur du kommit fram till om din kod fungerar.

@@ -109,7 +109,7 @@ En förutsättning för att nedanstående testfall ska kunnat genomförats korre
 <br>
 1) Efter att morgondagens timpriser har hämtats så kan en specifik zon sorteras från lägsta pris till högsta. Utfall:<br>
 
-![Testutfall](./images/SortLowest.png)
+![Testutfall](./images/sortLowest.png)
 
 ---
 </details>
