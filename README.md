@@ -51,6 +51,7 @@ Laboration 1
 │───package-lock.json
 │───README.md
 │───Reflektion.md
+│───Release.md
 │───testModule.js
 ```
 ---

@@ -1,6 +1,9 @@
 # Testspecifikation
 ## **BESKRIVNING**
-Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Inga krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0. Vid eventuella frågor kring installationen eller hur modulen så finns svaren i Readme.md.
+Modulen har testats genom manuella tester vilket redovisas i den här rapporten. Inga krav finns kopplade till testen. Samtliga tester som genomförts avser modulversion 1.0.0. Vid eventuella frågor kring installationen eller hur modulen fungerar så hänvisas läsaren till i README.md. Varje metod har testats manuellt och metoderna har körts via testModule.js och utfallet har dokumenterats nedan. <br>
+## **FÖRKRAV**
+En förutsättning för att nedanstående testfall ska kunnat genomförats korrekt och ge ett korrekt utfall är att samtliga privata metoder som återfinns i spotPriceApi.js är korrekta. Därav finns inga egna testfall över de metoder utan deras status ingår i TF 1.
+
 
 ## **ÖVERSIKT**
 
@@ -37,17 +40,13 @@ Modulen har testats genom manuella tester vilket redovisas i den här rapporten.
 
 ---
 
-### **validateInputHander.js**
+### **Klass ValidateInputHandler - validateInputHander.js**
 | Metod | Status | Testfall |
 | ----------- | ----------- | ----------- |
 | validateIfValidZone() | ✅ | TF 11 |
 | validateIfNumber() | ✅ | TF 12 |
 
 <br>
-
-# **TESTRAPPORT**
-Varje metod har testats manuellt och metoderna har körts via testModule.js och utfallet har dokumenterats nedan. <br>
-Förkrav för att nedanstående testfall ska kunnat genomföras korrekt och ge ett korrekt utfall är att samtliga privata metoder som återfinns i spotPriceApi.js är korrekta. Därav finns inga egna testfall över de metoder utan deras status ingår i TF 1.
 
 # Testfall
 Öppna upp ett test för att ta del av utfallet

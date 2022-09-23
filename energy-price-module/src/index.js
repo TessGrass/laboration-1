@@ -1,5 +1,5 @@
 import { SpotPriceApi } from './spotPriceApi.js'
-import { validateIfNumber, validateIfValidZone } from './validateInputHandler.js'
+import { ValidateInputHandler } from './validateInputHandler.js'
 
 export class ElectricityRatesProvider {
   #spotPriceApi
@@ -9,6 +9,7 @@ export class ElectricityRatesProvider {
    */
   constructor () {
     this.#spotPriceApi = new SpotPriceApi()
+    this.validator = new ValidateInputHandler()
   }
 
   /**
@@ -27,7 +28,7 @@ export class ElectricityRatesProvider {
    * @returns {object} - Containing tomorrows price (in pennies) for a specific zone.
    */
   async getHourlyPricesForOneBiddingZone (selectedZone) {
-    validateIfValidZone(selectedZone)
+    this.validator.validateIfValidZone(selectedZone)
     const hourlyPricesForBiddingZones = await this.getHourlyPricesAllBiddingZones()
     const hourlyPricesForZone = []
 
@@ -63,7 +64,7 @@ export class ElectricityRatesProvider {
    * @returns {object} - Containing the sorted prices (in pennies), from high too low.
    */
   async sortHoursPerHighestPrice (zone) {
-    validateIfValidZone(zone)
+    this.validator.validateIfValidZone(zone)
     const hourlyPricesForBiddingZone = await this.getHourlyPricesForOneBiddingZone(zone)
     return hourlyPricesForBiddingZone.sort((b, a) => a.pricePerKwh - b.pricePerKwh)
   }
@@ -75,7 +76,7 @@ export class ElectricityRatesProvider {
    * @returns {object} - Containing the sorted prices (in pennies), from low to high.
    */
   async sortHoursPerLowestPrice (zone) {
-    validateIfValidZone(zone)
+    this.validator.validateIfValidZone(zone)
     const hourlyPricesForBiddingZone = await this.getHourlyPricesForOneBiddingZone(zone)
     return hourlyPricesForBiddingZone.sort((a, b) => a.pricePerKwh - b.pricePerKwh)
   }
@@ -83,14 +84,14 @@ export class ElectricityRatesProvider {
   /**
    * Calculates the kilowatt price for Propane.
    *
-   * @param {*} propanePrice - The price purchased for the propane.
-   * @param {*} propaneKg - The weight of the purchased propane.
+   * @param {number} propanePrice - The price purchased for the propane.
+   * @param {number} propaneKg - The weight of the purchased propane.
    *
    * @returns {number} - The calculated kwh price, in pennies, for propane.
    */
   calculatePropaneKilowattPrice (propanePrice, propaneKg) {
     const propaneData = [propanePrice, propaneKg]
-    validateIfNumber(propaneData)
+    this.validator.validateIfNumber(propaneData)
     const propaneKwhPerKg = 12.8
     const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
     const propanePricePerKgInPennies = this.#calculateCrownsToPennies(propanePricePerKg)
@@ -123,14 +124,14 @@ export class ElectricityRatesProvider {
   /**
    * Filters out which hours propane is cheaper to use than electricity.
    *
-   * @param {*} propanePricePerKwh  - The price per kWh for propane.
-   * @param {*} selectedZone  - The specific zone.
+   * @param {number} propanePricePerKwh  - The price per kWh for propane.
+   * @param {string} selectedZone  - The specific zone.
    * @returns {Array} - An array with the hours.
    */
   async getHoursWhenPropaneIsCheaper (propanePricePerKwh, selectedZone) {
     const arrPropanePrice = [propanePricePerKwh]
-    validateIfNumber(arrPropanePrice)
-    validateIfValidZone(selectedZone)
+    this.validator.validateIfNumber(arrPropanePrice)
+    this.validator.validateIfValidZone(selectedZone)
     const hourlyPricesAllZones = await this.getHourlyPricesAllBiddingZones()
     const hoursWhenPropaneIsCheaper = []
     for (const element of hourlyPricesAllZones) {
@@ -155,7 +156,7 @@ export class ElectricityRatesProvider {
    */
   calculateWattToKilowatt (watt) {
     const arrWatt = [watt]
-    validateIfNumber(arrWatt)
+    this.validator.validateIfNumber(arrWatt)
     return (watt / 1000)
   }
 
@@ -167,7 +168,7 @@ export class ElectricityRatesProvider {
    */
   calculateKilowattToMegawatt (kilowatt) {
     const arrKilowatt = [kilowatt]
-    validateIfNumber(arrKilowatt)
+    this.validator.validateIfNumber(arrKilowatt)
     return (kilowatt / 1000)
   }
 
@@ -180,7 +181,7 @@ export class ElectricityRatesProvider {
    */
   calculateConsumedWattToWattHours (watt, hoursRunning) {
     const value = [watt, hoursRunning]
-    validateIfNumber(value)
+    this.validator.validateIfNumber(value)
     return (watt * hoursRunning)
   }
 
@@ -195,7 +196,7 @@ export class ElectricityRatesProvider {
    */
   calculateConsumtionCostPerDayForProduct (deviceWatt, penniesPerKwh, hoursRunningPerDay) {
     const value = [deviceWatt, penniesPerKwh, hoursRunningPerDay]
-    validateIfNumber(value)
+    this.validator.validateIfNumber(value)
     const kwh = this.calculateWattToKilowatt(deviceWatt)
     const costPerDay = (kwh * hoursRunningPerDay * penniesPerKwh)
     return this.#roundsDecimalsInNumber(costPerDay)
@@ -210,26 +211,4 @@ export class ElectricityRatesProvider {
   #roundsDecimalsInNumber (value) {
     return Math.round(value * 100) / 100
   }
-
-  /* async getHoursWhenPropaneIsCheaper (propanePrice, selectedZone) {
-    const arrPropanePrice = [propanePrice]
-    validateIfNumber(arrPropanePrice)
-    validateIfValidZone(selectedZone)
-
-    const hourlyPricesAllZones = await this.getHourlyPricesAllBiddingZones()
-    const hoursWhenPropaneIsCheaper = []
-
-    for (const element of hourlyPricesAllZones) {
-      const startTime = this.#extractStartTimeFromDate(element)
-      for (const [key, value] of Object.entries(element.areas)) {
-        if (value.zone === selectedZone && value.pricePerKwh > propanePrice) {
-          const pricePerKwh = value.pricePerKwh
-          const zone = value.zone
-          const propanePerKwh = propanePrice      
-          hoursWhenPropaneIsCheaper.push({ startTime, pricePerKwh, zone, propanePerKwh })
-        }
-      }
-    }
-    return hoursWhenPropaneIsCheaper
-  } */
 }

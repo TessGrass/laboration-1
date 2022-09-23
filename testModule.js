@@ -21,17 +21,18 @@ class TestElectricityPricesModule {
     const kilowatt = 5
     const hoursRunning = 24
     const penniesPerKwh = 125.00
+    
     console.log ({
-/*     electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(), */
-/*     electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone), */
-/*     sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone), */
+    electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(),
+    electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone),
+    sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone),
     sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone),
-/*     propanePricePerKwhInPennies: this.electricityRatesProvider.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg), */
-/* hoursPropaneIsCheaperThanElectricity: await this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone), */
-/*     myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt),
+    propanePricePerKwhInPennies: this.electricityRatesProvider.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg),
+    hoursPropaneIsCheaperThanElectricity: this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone),
+    myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt),
     howMuchIsKilowattInMegawatt: this.electricityRatesProvider.calculateKilowattToMegawatt(kilowatt),
-    convertedWattToWattHours: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning),
-    myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateCostPerDayForProduct(watt, penniesPerKwh, hoursRunning) */
+    /* convertedWattToWattHours: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning), */
+/*     myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateCostPerDayForProduct(watt, penniesPerKwh, hoursRunning) */
     })
   }
 }
