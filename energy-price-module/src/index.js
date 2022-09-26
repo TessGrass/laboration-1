@@ -19,6 +19,7 @@ export class ElectricityRatesProvider {
    */
   async getHourlyPricesAllBiddingZones () {
     return await this.#spotPriceApi.getTomorrowsElectricityData()
+    
   }
 
   /**

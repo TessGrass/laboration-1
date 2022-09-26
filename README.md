@@ -128,5 +128,8 @@ calculateConsumtionCostPerDayForProduct (watt, penniesPerKilowatt, hoursRunning)
 ## Contributing
 Feel free to contribute! For major changes, please open an issue first to discuss what you would like to change.
 
+## 1DV610-mjukvarukvalité-L1
+This is assignment for the course 1DV610 att Linneus University.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
