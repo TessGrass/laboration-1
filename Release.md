@@ -27,14 +27,14 @@ Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser.
 <i>Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din modul. Om du skrivit instruktioner för din användare, länka till dessa. Om inte, beskriv här hur någon skall göra för att använda din modul.</i>
 
 Grundtanken är att användaren ska använda sig av filen index.js som innehåller de publika metoder som jag har valt att göra tillgängliga, dock hänvisar jag
-till min [README.md](README.md) där jag detaljerat specificierar hur en annan användare ska använda sig av min modul och hur den fungerar.
+till min [README.md](README.md) där jag detaljerat specificerar hur en annan användare ska använda sig av min modul och hur den fungerar.
 ​
 ## Beskrivning av min kod
 <i>Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. Använd det ni lärt er så här långt i 1dv607. Kommunicera så att jag kan förstå.</i>
 
 ![Klassdiagram](./images/Klassdiagram%20-%20Labb1.jpg)
 
-Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop eftersom responen är kärnan i min modul, så därav kan man tycka att den är den allra viktigaste. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflektar ganska mycket kring min modul i [Reflektion.md](Reflektion.md) så läs gärna där) 
+Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop eftersom responsen är kärnan i min modul. Därför kan man med enkelhet argumentera för att den är den allra viktigaste klassen. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflekterar ganska mycket kring min modul i [Reflektion.md](Reflektion.md) så läs gärna där) 
 ​
 ## Hur jag testat
 <i>Beskriv hur du kommit fram till om din kod fungerar.</i>
