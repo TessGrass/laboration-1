@@ -46,14 +46,15 @@ Laboration 1
 │     │───spotPriceApi.js
 │     │───index.js
 │     │───validateInputHandler.js
-│  
+│
+│───images/
+│
 └───test-rapport/
 │   │
 │   └───images/
 │   │
 │   └─── TestRapport.md
-│  
-│
+|
 │───package.json
 │───package-lock.json
 │───README.md
@@ -76,7 +77,7 @@ The testModule.js contains all the public methods you as a developer want to use
 In order to quickly and easily get started with testing the module, each method is independent and gets its arguments ​​from the variables directly in the test module, feel free to elaborate with them yourself! When you are done testing a method you can just comment that one out.
 <br>
 
-![TestModule](./test-rapport/images/TestModuleOverview.png)
+![TestModule](./images/TestModuleOverview.png)
 
 To run the testModule.js just open the terminal and type:
 ```

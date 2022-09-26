@@ -32,7 +32,7 @@ till min [README.md](README.md) där jag detaljerat specificierar hur en annan a
 ## Beskrivning av min kod
 <i>Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. Använd det ni lärt er så här långt i 1dv607. Kommunicera så att jag kan förstå.</i>
 
-![Klassdiagram](./test-rapport/images/Klassdiagram%20-%20L1.jpg)
+![Klassdiagram](./images/Klassdiagram%20-%20Labb1.jpg)
 
 Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop eftersom responen är kärnan i min modul, så därav kan man tycka att den är den allra viktigaste. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflektar ganska mycket kring min modul i [Reflektion.md](Reflektion.md) så läs gärna där) 
 ​
