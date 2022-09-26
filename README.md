@@ -121,7 +121,7 @@ calculateKilowattToMegawatt(kilowatt)
 calculateConsumedWattToWattHours(watt, hoursRunning)
 
 'returns the daily cost of running a device'
-calculateCostPerDayForProduct(watt, penniesPerKilowatt, hoursRunning)
+calculateConsumtionCostPerDayForProduct (watt, penniesPerKilowatt, hoursRunning)
 ```
 
 ## Contributing

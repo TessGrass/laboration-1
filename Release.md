@@ -15,43 +15,44 @@
     - [x] Kodkvaliterskraven är ifyllda
     - [x] Reflektion är skriven utifrån bokens kapitel 
   - [ ] Jag eftersträvar med denna inlämning högre betyg (C-B) och anser mig uppfylla alla extra krav för detta. 
-    - [ ] Samtliga testfall är skrivna    
+    - [x] Samtliga testfall är skrivna    
     - [ ] Testfall är automatiserade
-    - [ ] Det finns en tydlig beskrivning i hur modulen skall användas (i git)
-    - [ ] Kodkvalitetskraven är varierade 
+    - [x] Det finns en tydlig beskrivning i hur modulen skall användas (i git)
+    - [x] Kodkvalitetskraven är varierade 
   - [ ] Jag eftersträvar med denna inlämning högsta betyg (A) 
 ​
 Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
 ​
 ## Återanvändning
-Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din modul. Om du skrivit instruktioner för din användare, länka till dessa. Om inte, beskriv här hur någon skall göra för att använda din modul.
+<i>Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din modul. Om du skrivit instruktioner för din användare, länka till dessa. Om inte, beskriv här hur någon skall göra för att använda din modul.</i>
 
-- Jag hänvisar till min README.md där jag specificierar hur en annan användare ska använda sig av min modul (installationsprocess och liknande)
+Grundtanken är att användaren ska använda sig av filen index.js som innehåller de publika metoder som jag har valt att göra tillgängliga, dock hänvisar jag
+till min [README.md](README.md) där jag detaljerat specificierar hur en annan användare ska använda sig av min modul och hur den fungerar.
 ​
 ## Beskrivning av min kod
-Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. Använd det ni lärt er så här långt i 1dv607. Kommunicera så att jag kan förstå.
+<i>Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. Använd det ni lärt er så här långt i 1dv607. Kommunicera så att jag kan förstå.</i>
 
-Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop, responen är ju kärnan i min modul, och därav kan man tycka att den är den allra viktigaste. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflektar ganska mycket kring min modul i Reflektion.md så läs gärna där) 
+Det är svårt att pinpointa vilka specifika metoder eller klasser som är de viktigaste. Givetvis så är klassen SpotPriceApi spindeln i nätet med sitt API anrop eftersom responen är kärnan i min modul, så därav kan man tycka att den är den allra viktigaste. Dock så ser jag metoderna och klasserna som ett lagspel, även den minsta metoden har betydelse för helheten. Alla metoder bidrar med något som just där och då gör den till den viktigaste kuggen i hjulet. (Jag reflektar ganska mycket kring min modul i [Reflektion.md](Reflektion.md) så läs gärna där) 
 ​
 ## Hur jag testat
-Beskriv hur du kommit fram till om din kod fungerar.
+<i>Beskriv hur du kommit fram till om din kod fungerar.</i>
 
-- Se Testrapport.md för att ta del av testresultatet.
+Se [Testrapport.md](./test-rapport/Testrapport.md) för att ta del av testresultatet.
 ​
 ### Testfall
-Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En rad per testfall. Om ni använder vertyg för testning kan ni ha en bild här med testrapporten. Tänk på att kommunicera till mig. Vad fungerar?, vad fungerar inte? Hur är det testat? Vilka delar testas inte?
+<i>Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En rad per testfall. Om ni använder vertyg för testning kan ni ha en bild här med testrapporten. Tänk på att kommunicera till mig. Vad fungerar?, vad fungerar inte? Hur är det testat? Vilka delar testas inte? </i>
 
-- Se Testrapport.md för att ta del av testresultatet.
+Se [Testrapport.md](./test-rapport/Testrapport.md) för att ta del av testresultatet.
 
 ​
 ## Kodkvalitetskrav
 ​
-**Fetmarkera** de "regler" som används ur CC. Ni kan frångå tabellformat om ni vill. Skapa direktlänkar till er kod där det är lämpligt. Skriv så att jag kan förstå.
+<i>**Fetmarkera** de "regler" som används ur CC. Ni kan frångå tabellformat om ni vill. Skapa direktlänkar till er kod där det är lämpligt. Skriv så att jag kan förstå.</i>
 
-- Se Reflektion.md för reflektioner och kodkvalitékrav.
+Se [Reflektion.md](Reflektion.md) för reflektioner och kodkvalitékrav.
 ​
 
 ## Laborationsreflektion
-Reflektera över uppgiften utifrån ett kodkvalitetsperspektiv. Använd begrepp ifrån boken. 
+<i>Reflektera över uppgiften utifrån ett kodkvalitetsperspektiv. Använd begrepp ifrån boken. </i>
 
-- Se Reflektion.md för reflektioner och kodkvalitékrav.
+Se [Reflektion.md](Reflektion.md) för reflektioner och kodkvalitékrav.

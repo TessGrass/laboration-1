@@ -31,8 +31,8 @@ class TestElectricityPricesModule {
     hoursPropaneIsCheaperThanElectricity: this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone),
     myComputerInKilowattUsage: this.electricityRatesProvider.calculateWattToKilowatt(watt),
     howMuchIsKilowattInMegawatt: this.electricityRatesProvider.calculateKilowattToMegawatt(kilowatt),
-    /* convertedWattToWattHours: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning), */
-/*     myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateCostPerDayForProduct(watt, penniesPerKwh, hoursRunning) */
+    convertedWattToWattHours: this.electricityRatesProvider.calculateConsumedWattToWattHours(watt, hoursRunning),
+    myDeviceDailyUsageCostInPennies: this.electricityRatesProvider.calculateConsumtionCostPerDayForProduct(watt, penniesPerKwh, hoursRunning)
     })
   }
 }

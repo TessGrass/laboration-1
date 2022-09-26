@@ -22,7 +22,7 @@ En förutsättning för att nedanstående testfall ska kunnat genomförats korre
 | calculateWattToKilowatt() | ✅ | TF 6 |
 | calculateKilowattToMegawatt() | ✅ | TF 7 |
 | calculateConsumedWattToWattHours() | ✅ | TF 8 |
-| calculateCostPerDayForProduct() | ✅ | TF 9 |
+| calculateConsumtionCostPerDayForProduct () | ✅ | TF 9 |
 | #roundDecimalsInNumber() | ✅ | TF 10 |
 
 ---
