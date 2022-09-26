@@ -134,6 +134,7 @@ export class ElectricityRatesProvider {
     this.validator.validateIfValidZone(selectedZone)
     const hourlyPricesAllZones = await this.getHourlyPricesAllBiddingZones()
     const hoursWhenPropaneIsCheaper = []
+
     for (const element of hourlyPricesAllZones) {
       const startTime = this.#extractStartTimeFromDate(element)
       for (const [key, value] of Object.entries(element.areas)) {
@@ -142,6 +143,8 @@ export class ElectricityRatesProvider {
           const zone = value.zone
           const propanePerKwh = propanePricePerKwh
           hoursWhenPropaneIsCheaper.push({ startTime, pricePerKwh, zone, propanePerKwh })
+        } else {
+          return ('No hourly prices are higher than the propane price')
         }
       }
     }

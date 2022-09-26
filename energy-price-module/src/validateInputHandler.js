@@ -18,7 +18,7 @@ export class ValidateInputHandler {
  */
 validateIfValidZone (biddingZone) {
   const zone = biddingZone.toUpperCase()
-  if (Object.values(this.zonesEnum).includes(zone)) {
+  if (Object.values(this.#zonesEnum).includes(zone)) {
     return
   }
   throw new Error('The selected zone does not exist')
