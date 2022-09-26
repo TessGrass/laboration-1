@@ -9,7 +9,7 @@ class TestElectricityPricesModule {
 
   /**
    * This is the test module where you can test all the available methods.  
-   * Fell free to change the values in the variables.
+   * Feel free to change the values in the variables.
    * Just comment out the method you have successfully tested.
    */
   async showDataFromAllPublicMethods() {

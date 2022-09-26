@@ -22,7 +22,7 @@ With today's electricity market in mind, this module was created as a tool for u
 ---
 
 ## **Installation**
-Clone the repository from Github by running the following command in the terminal. The repot will be cloned down where the terminal path points to:
+Clone the repository from Github by running the following command in the terminal. The repo will be cloned down to which the terminal path points to:
  ```
  git clone https://github.com/TessGrass/laboration-1.git
  ```
@@ -41,12 +41,12 @@ npm install
 Laboration 1  
 │
 └───energy-price-module/
-│ │
-│ └───src/
-│     │───spotPriceApi.js
-│     │───index.js
-│     │───validateInputHandler.js
-│
+│   │
+│   └───src/
+│       │───spotPriceApi.js
+│       │───index.js
+│       │───validateInputHandler.js
+│ 
 │───images/
 │
 └───test-rapport/
