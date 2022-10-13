@@ -16,7 +16,7 @@ export class ValidateInputHandler {
  *
  * @param {string} biddingZone - A possible zone.
  */
-validateIfValidZone (biddingZone) {
+validateBiddingZone (biddingZone) {
   const zone = biddingZone.toUpperCase()
   if (Object.values(this.#zonesEnum).includes(zone)) {
     return

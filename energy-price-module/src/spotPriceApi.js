@@ -74,7 +74,7 @@ export class SpotPriceApi {
           const stringSekMWh = element.Value.replaceAll(' ', '').replaceAll(',', '.')
           const sekMWh = this.#convertStringToNumber(stringSekMWh)
           const sekKWh = this.#divideNumberWithTen(sekMWh)
-          const penniesKWh = this.#roundDecimalsFoundInNumber(sekKWh) || 0.00
+          const penniesKWh = this.#roundDecimalsInNumber(sekKWh) || 0.00
           return {
             pricePerKwh: penniesKWh,
             zone: element.Name
@@ -85,32 +85,14 @@ export class SpotPriceApi {
     return dayAheadPricesAndZones
   }
 
-  /**
-   * Converts string to number.
-   *
-   * @param {string} stringOfNumbers - A string with numbers.
-   * @returns {number} - the same numbers converted to datatype Number.
-   */
   #convertStringToNumber (stringOfNumbers) {
     return Number(stringOfNumbers)
   }
 
-  /**
-   * Rounds decimals found in number.
-   *
-   * @param {number} value - The number to be rounded.
-   * @returns {number} - Rounded number.
-   */
-  #roundDecimalsFoundInNumber (value) {
+  #roundDecimalsInNumber (value) {
     return Math.round(value * 100) / 100
   }
 
-  /**
-   * Divides a number by ten.
-   *
-   * @param {number} number  - A number.
-   * @returns {number} - The number divided by ten.
-   */
   #divideNumberWithTen (number) {
     return (number / 10)
   }
