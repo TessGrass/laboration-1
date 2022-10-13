@@ -29,16 +29,17 @@ export class ElectricityRatesProvider {
    * @returns {object} - Containing tomorrows price (in pennies) for a specific zone.
    */
   async getHourlyPricesForOneBiddingZone (selectedZone) {
-    this.validator.validateIfValidZone(selectedZone)
+    this.validator.validateIfValidZone(selectedZone) // skapa ett zonobjekt? Ev. skriva i kommentarerna. Prio 3.
+    // Namnbyte: "throwexceptionifinvalidzone alt validateZone"
     const hourlyPricesForBiddingZones = await this.getHourlyPricesAllBiddingZones()
     const hourlyPricesForZone = []
 
-    for (const element of hourlyPricesForBiddingZones) {
+    for (const element of hourlyPricesForBiddingZones) { // bryt ner till en funktion, returnera hourlyPricesForZone. Prio 1.
       const startTime = this.#extractStartTimeFromDate(element)
       let pricePerKwh = 0
       let zone = ''
       for (const [key, value] of Object.entries(element.areas)) {
-        if (value.zone === selectedZone) {
+        if (value.zone === selectedZone) { // skapa en funktion isSelectedZone, returnera boolean. Prio 2.
           pricePerKwh = value.pricePerKwh
           zone = value.zone
         }
@@ -206,12 +207,6 @@ export class ElectricityRatesProvider {
     return this.#roundsDecimalsInNumber(costPerDay)
   }
 
-  /**
-   * Rounds a number to at most two decimal places.
-   *
-   * @param {number} value - The number to be rounded.
-   * @returns {number} - The rounded number.
-   */
   #roundsDecimalsInNumber (value) {
     return Math.round(value * 100) / 100
   }
