@@ -15,17 +15,21 @@ En förutsättning för att nedanstående testfall ska kunnat genomförats korre
 | #extractStartTimeFromDate() | ✅ | TF 2 |
 | sortHoursPerHighestPrice() | ✅ | TF 3 |
 | sortHoursPerLowestPrice() | ✅ | TF 4 |
-| calculatePropaneKilowattPrice() | ✅ | TF 5 |
 | getHoursWhenPropaneIsCheaper() | ✅ | TF 5 |
+<br>
+
+### **Klass ConvertHandler - converterHandler.js**
+| Metod | Status | Testfall |
+| ----------- | ----------- | ----------- |
+| calculatePropaneKilowattPrice() | ✅ | TF 5 |
 | #dividePropanePriceWithKilogram() | ✅ | TF 5 |
-| #convertCrownsToPennies() | ✅ | TF 5 |
+| #calculateCrownsToPennies() | ✅ | TF 5 |
 | calculateWattToKilowatt() | ✅ | TF 6 |
 | calculateKilowattToMegawatt() | ✅ | TF 7 |
 | calculateConsumedWattToWattHours() | ✅ | TF 8 |
 | calculateConsumtionCostPerDayForProduct () | ✅ | TF 9 |
 | #roundDecimalsInNumber() | ✅ | TF 10 |
-
----
+<br>
 
 ### **Klass SpotPriceApi - spotPriceApi.js**
 | Metod | Status | Testfall |
@@ -37,13 +41,12 @@ En förutsättning för att nedanstående testfall ska kunnat genomförats korre
 | #extractElectricityPricesAndZones() | ✅ | TF 1 |
 | #convertStringToNumber() | ✅ | TF 1
 | #divideNumberWithTen() | ✅ | TF 1
-
----
+<br>
 
 ### **Klass ValidateInputHandler - validateInputHander.js**
 | Metod | Status | Testfall |
 | ----------- | ----------- | ----------- |
-| validateIfValidZone() | ✅ | TF 11 |
+| validateBiddingZone() | ✅ | TF 11 |
 | validateIfNumber() | ✅ | TF 12 |
 
 <br>
@@ -211,7 +214,7 @@ Valideringen sker mot ett enum/objekt som består av Sveriges fyra elområden.<b
 2) Kontroll görs att en felaktig zon kastar ett fel.
 <br>Utfall:
 
-![Testutfall](./images/ZonedoesntExists.png)<br>
+![Testutfall](./images/zone%20doesnt%20not%20exist.png)<br>
 </details>
 <details>
 <summary>
@@ -223,13 +226,12 @@ Valideringen sker mot ett enum/objekt som består av Sveriges fyra elområden.<b
 1) Kontroll görs att en array som enbart består av datatyp Number returneras som true. 
 <br>Utfall:
 
-![Testutfall](./images/ValidateNumbers.png)<br>
 ![Testutfall](./images/ArrayContainsOnlyNumbers.png)<br>
 2) Kontroll görs att en array som inte innehåller enbart datatyp Number kastar ett fel
 <br>Utfall:
 
 ![Testutfall](./images/ValidateNumbersWithString.png)<br>
-![Testutfall](./images/ErrorNumbers.png)<br>
+![Testutfall](./images/error%20type%20number.png)<br>
 </details>
 <br>
 

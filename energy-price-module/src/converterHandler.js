@@ -1,11 +1,9 @@
-import { SpotPriceApi } from './spotPriceApi.js'
 import { ValidateInputHandler } from './validateInputHandler.js'
 
 export class ConverterHandler {
-  #spotPriceApi
   #validator
+
   constructor () {
-    this.#spotPriceApi = new SpotPriceApi()
     this.#validator = new ValidateInputHandler()
   }
 
@@ -23,9 +21,10 @@ export class ConverterHandler {
     const propaneKwhPerKg = 12.8
     const propanePricePerKg = this.#dividePropanePriceWithKilogram(propanePrice, propaneKg)
     const propanePricePerKgInPennies = this.#calculateCrownsToPennies(propanePricePerKg)
-    const nonRoundedKgPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
-    const roundedKgPrice = this.#roundsDecimalsInNumber(nonRoundedKgPrice)
-    return roundedKgPrice
+    const nonRoundedKwhPrice = (propanePricePerKgInPennies / propaneKwhPerKg)
+    const propaneKwhPrice = this.#roundsDecimalsInNumber(nonRoundedKwhPrice)
+    
+    return propaneKwhPrice
   }
 
   #dividePropanePriceWithKilogram (price, kilogram) {
@@ -35,38 +34,6 @@ export class ConverterHandler {
   #calculateCrownsToPennies (crowns) {
     return (crowns * 100)
   }
-
-  /**
-   * Filters out which hours propane is cheaper to use than electricity.
-   *
-   * @param {number} propanePricePerKwh  - The price per kWh for propane.
-   * @param {string} selectedZone  - The specific zone.
-   * @returns {Array} - An array with the hours.
-   */
-  async getHoursWhenPropaneIsCheaper (propanePricePerKwh, selectedZone) {
-    const arrPropanePrice = [propanePricePerKwh]
-    this.#validator.validateIfNumber(arrPropanePrice)
-    this.#validator.validateBiddingZone(selectedZone)
-    const hourlyPricesAllZones = await this.#spotPriceApi.getTomorrowsElectricityData()
-    const hoursWithCheaperPropane = []
-
-    for (const el of hourlyPricesAllZones) {
-      const startTime = this.#extractStartTimeFromDate(el)
-      for (const value of Object.values(el.areas)) {
-        if (value.zone === selectedZone && value.pricePerKwh > propanePricePerKwh) {
-          let pricePerKwh = value.pricePerKwh
-          let zone = value.zone
-          let propanePerKwh = propanePricePerKwh
-          hoursWithCheaperPropane.push({ startTime, pricePerKwh, zone, propanePerKwh })
-        } 
-      }
-    }
-    return hoursWithCheaperPropane
-  }
-
-     #extractStartTimeFromDate (element) {
-      return element.startTime.slice(11)
-    }
 
   /**
    * Converts watt to kilowatt.
@@ -119,6 +86,7 @@ export class ConverterHandler {
     this.#validator.validateIfNumber(value)
     const kwh = this.calculateWattToKilowatt(deviceWatt)
     const costPerDay = (kwh * hoursRunningPerDay * penniesPerKwh)
+
     return this.#roundsDecimalsInNumber(costPerDay)
   }
 

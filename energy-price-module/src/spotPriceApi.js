@@ -51,6 +51,7 @@ export class SpotPriceApi {
    */
   async #getDayAheadData () {
     const response = await fetch(`http://www.nordpoolspot.com/api/marketdata/page/29?currency=SEK,SEK,SEK&endDate=${this.tomorrowsDate}`)
+    
     if (response.status === 200) {
       const unfilteredData = await response.json()
       const filteredElectricityData = unfilteredData.data.Rows
@@ -64,19 +65,20 @@ export class SpotPriceApi {
    * Extracts information from the response.
    *
    * @param {Array} electricityData - The array with the unfiltered response data.
-   * @returns {Array} - The filtered data contains hourly prices and zones.
+   * @returns {Array} - The filtered data containing only hourly prices and zones.
    */
   #extractElectricityPricesAndZones (electricityData) {
     const dayAheadPricesAndZones = electricityData.filter(row => !row.IsExtraRow).map((row) => {
       return {
         startTime: row.StartTime,
         areas: row.Columns.filter(element => element.GroupHeader != null).map(element => {
-          const stringSekMWh = element.Value.replaceAll(' ', '').replaceAll(',', '.')
-          const sekMWh = this.#convertStringToNumber(stringSekMWh)
-          const sekKWh = this.#divideNumberWithTen(sekMWh)
-          const penniesKWh = this.#roundDecimalsInNumber(sekKWh) || 0.00
+          const megawatt = element.Value.replaceAll(' ', '').replaceAll(',', '.')
+          const pricePerMegawatt = this.#convertStringToNumber(megawatt)
+          const pricePerKilowatt = this.#divideNumber(pricePerMegawatt)
+          const roundedPricePerKilowatt = this.#roundDecimalsInNumber(pricePerKilowatt) || 0.00
+
           return {
-            pricePerKwh: penniesKWh,
+            pricePerKwh: roundedPricePerKilowatt,
             zone: element.Name
           }
         })
@@ -93,7 +95,7 @@ export class SpotPriceApi {
     return Math.round(value * 100) / 100
   }
 
-  #divideNumberWithTen (number) {
+  #divideNumber (number) {
     return (number / 10)
   }
 }

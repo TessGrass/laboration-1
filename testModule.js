@@ -18,7 +18,7 @@ class TestElectricityPricesModule {
   async showDataFromAllPublicMethods() {
     const propanePriceInCrowns = 225
     const propaneKg = 11
-    const penniesPerKwhPropane = 159.8
+    const penniesPerKwhPropane = 45
     const zone = 'SE3'
     const watt = 100
     const kilowatt = 5
@@ -26,16 +26,16 @@ class TestElectricityPricesModule {
     const penniesPerKwh = 125.00
     
     console.log ({
-/*     electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(), */
-electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone),
-/*     sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone),
-    sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone), */
-/*     propanePricePerKwhInPennies: this.converterHandler.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg), */
-/*     hoursPropaneIsCheaperThanElectricity: await this.converterHandler.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone), */
-/*     myComputerInKilowattUsage: this.converterHandler.calculateWattToKilowatt(watt),
+    electricityPricesForAllAreas: await this.electricityRatesProvider.getHourlyPricesAllBiddingZones(),
+    electricityPricesForSpecificZone: await this.electricityRatesProvider.getHourlyPricesForOneBiddingZone(zone),
+    sortHoursAccordingToHighestPrice: await this.electricityRatesProvider.sortHoursPerHighestPrice(zone),
+    sortHoursAccordingToLowestPrice: await this.electricityRatesProvider.sortHoursPerLowestPrice(zone),
+    propanePricePerKwhInPennies: this.converterHandler.calculatePropaneKilowattPrice(propanePriceInCrowns, propaneKg),
+    hoursPropaneIsCheaperThanElectricity: await this.electricityRatesProvider.getHoursWhenPropaneIsCheaper(penniesPerKwhPropane, zone),
+    myComputerInKilowattUsage: this.converterHandler.calculateWattToKilowatt(watt),
     howMuchIsKilowattInMegawatt: this.converterHandler.calculateKilowattToMegawatt(kilowatt),
     convertedWattToWattHours: this.converterHandler.calculateConsumedWattToWattHours(watt, hoursRunning),
-    myDeviceDailyUsageCostInPennies: this.converterHandler.calculateConsumtionCostPerDayForProduct(watt, penniesPerKwh, hoursRunning) */
+    myDeviceDailyUsageCostInPennies: this.converterHandler.calculateConsumtionCostPerDayForProduct(watt, penniesPerKwh, hoursRunning)
     })
   }
 }

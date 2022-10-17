@@ -21,7 +21,7 @@ validateBiddingZone (biddingZone) {
   if (Object.values(this.#zonesEnum).includes(zone)) {
     return
   }
-  throw new Error('The selected zone does not exist')
+  throw new Error('In validateBiddingZone method: The selected zone does not exist')
 }
 
 /**
@@ -34,7 +34,7 @@ validateIfNumber (arrData) {
     if (typeof element === 'number') {
       return
     }
-    throw new Error('The value needs to be of type number')
+    throw new Error('In ValidateIfNumber method: The value needs to be of type number')
   })
 }
 }
